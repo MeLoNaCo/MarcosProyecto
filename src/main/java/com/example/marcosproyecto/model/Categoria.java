@@ -1,6 +1,5 @@
 package com.example.marcosproyecto.model;
 
-// Avance 2: POJO dummy (sin @Entity). En Avance 3 agregar @Entity + JPA.
 public class Categoria {
 
     private Long id;
@@ -21,13 +20,25 @@ public class Categoria {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public String getNombre() {
+        return nombre;
+    }
 
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-    public int getDescuentoPct() { return descuentoPct; }
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public int getDescuentoPct() {
+        return descuentoPct;
+    }
 
     public void setDescuentoPct(int descuentoPct) {
         if (descuentoPct < 0) descuentoPct = 0;

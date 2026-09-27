@@ -1,8 +1,36 @@
 package com.example.marcosproyecto.repository;
 
+import com.example.marcosproyecto.model.Usuario;
 import org.springframework.stereotype.Repository;
 
-// TODO Avance 2: backend dummy con List en memoria. En Avance 3 cambiar a JpaRepository.
+import java.util.ArrayList;
+import java.util.List;
+
+// Avance 2: backend dummy con List en memoria. En Avance 3 cambiar a JpaRepository.
 @Repository
 public class UsuarioRepository {
+
+    private final List<Usuario> usuarios = new ArrayList<>();
+
+    public UsuarioRepository() {
+        usuarios.add(new Usuario(1L, "Admin", "HeroGames", "admin@herogames.com",
+                "admin123", "999888777", "ADMIN"));
+        usuarios.add(new Usuario(2L, "Leonardo", "Garay", "cliente1@herogames.com",
+                "cliente123", "999111222", "CLIENTE"));
+        usuarios.add(new Usuario(3L, "Maria", "Torres", "cliente2@herogames.com",
+                "cliente123", "999333444", "CLIENTE"));
+    }
+
+    public List<Usuario> findAll() {
+        return usuarios;
+    }
+
+    public Usuario findByEmail(String email) {
+        for (Usuario u : usuarios) {
+            if (u.getEmail().equalsIgnoreCase(email)) {
+                return u;
+            }
+        }
+        return null;
+    }
 }
