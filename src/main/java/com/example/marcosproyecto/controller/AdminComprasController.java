@@ -4,12 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-// TODO Avance 2: CRUD /admin/clientes (usuarios).
+// TODO Avance 2: ver detalle de cada compra en /admin/compras/{id}.
 @Controller
-public class AdminUsuarioController {
+public class AdminComprasController {
 
-    @GetMapping("/admin/clientes")
-    public String clientes(Model model) {
-        return "admin/clientes";
+    @GetMapping("/admin/compras")
+    public String compras(Model model) {
+        return "admin/compras";
     }
 }

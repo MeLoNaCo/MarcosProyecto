@@ -27,14 +27,26 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/about}">Acerca de</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/dashboard}">admin</a>
+                    </li>
                 </ul>
 
-                <div class="Derecha d-flex gap-4 fs-3">
-                    <a th:href="@{/carrito}" class="link-secondary" aria-label="Carrito">
+                <div class="Derecha d-flex gap-4 fs-3 align-items-center">
+                    <a th:href="@{/carrito}" class="link-secondary position-relative" aria-label="Carrito">
                         <i class="bi bi-cart"></i>
+                        <span th:if="${carritoCount > 0}" th:text="${carritoCount}"
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                            style="font-size: 0.65rem;">0</span>
                     </a>
-                    <a th:href="${session.usuario != null} ? @{/cuenta} : @{/login}" class="link-secondary" aria-label="Cuenta">
+                    <a th:if="${session.usuario == null}" th:href="@{/login}" class="link-secondary d-inline-flex align-items-center justify-content-center" style="width: 40px; height: 40px;" aria-label="Login">
                         <i class="bi bi-person"></i>
+                    </a>
+                    <a th:if="${session.usuario != null}" th:href="@{/cuenta}"
+                        class="text-decoration-none d-inline-flex align-items-center justify-content-center" style="width: 40px; height: 40px;" aria-label="Cuenta">
+                        <span class="rounded-circle bg-info text-dark d-inline-flex justify-content-center align-items-center fw-bold"
+                            style="width: 30px; height: 30px; font-size: 1rem;"
+                            th:text="${#strings.substring(session.usuario.nombre, 0, 1)}">U</span>
                     </a>
                 </div>
             </div>

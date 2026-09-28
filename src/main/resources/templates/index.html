@@ -35,7 +35,7 @@
                         <h5 class="text-light">Lo Último en Tecnología Gaming</h5>
                         <p class="text-light">Encuentra laptops, componentes y periféricos de alto rendimiento al mejor
                             precio.</p>
-                        <a href="html/catalogo.html" class="btn btn-info btn-sm fw-bold">Ver Catálogo</a>
+                        <a th:href="@{/catalogo}" class="btn btn-info btn-sm fw-bold">Ver Catálogo</a>
                     </div>
                 </div>
                 <div class="carousel-item">
@@ -53,7 +53,7 @@
                     <div class="carousel-caption d-none d-md-block text-start">
                         <h5 class="text-light">Descuentos Exclusivos</h5>
                         <p class="text-light">Crea tu cuenta hoy y obtén promociones especiales en tus compras.</p>
-                        <a href="html/login.html" class="btn btn-info btn-sm fw-bold">Regístrate Ahora</a>
+                        <a th:href="@{/registro}" class="btn btn-info btn-sm fw-bold">Regístrate Ahora</a>
                     </div>
                 </div>
             </div>
@@ -132,66 +132,25 @@
         <section class="my-5">
             <h2 class="text-light mb-4">Ofertas Destacadas</h2>
             <div class="d-flex flex-row flex-nowrap overflow-auto gap-3 pb-3 contenedor-scroll">
-                <div class="card bg-dark text-light border-secondary flex-shrink-0" style="width: 16rem;">
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">-20%</span>
-                    <img src="https://cdn.pixabay.com/photo/2015/03/21/19/27/pc-684125_1280.jpg" class="card-img-top"
-                        alt="...">
+                <div class="card bg-dark text-light border-secondary flex-shrink-0" style="width: 16rem;"
+                    th:each="p : ${ofertas}">
+                    <span class="badge bg-danger position-absolute top-0 start-0 m-2"
+                        th:text="'-' + ${p.oferta} + '%'">-20%</span>
+                    <img th:src="${p.imagenUrl}"
+                        src="https://cdn.pixabay.com/photo/2015/03/21/19/27/pc-684125_1280.jpg" class="card-img-top"
+                        th:alt="${p.nombre}" alt="...">
                     <div class="card-body d-flex flex-column">
-                        <h6 class="card-title text-info">Mouse Gamer RGB</h6>
-                        <span class="fw-bold text-success mt-auto">$9.99</span>
-                        <a href="#" class="btn btn-sm btn-primary w-100 mt-2">Comprar</a>
+                        <h6 class="card-title text-info" th:text="${p.nombre}">Producto</h6>
+                        <span class="fw-bold text-success mt-auto"
+                            th:text="'S/ ' + ${#numbers.formatDecimal(p.precioFinal, 1, 'COMMA', 2, 'POINT')}">$0.00</span>
+                        <a th:href="@{/catalogo}" href="#" class="btn btn-sm btn-primary w-100 mt-2">Comprar</a>
                     </div>
                 </div>
-                <div class="card bg-dark text-light border-secondary flex-shrink-0" style="width: 16rem;">
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">-35%</span>
-                    <img src="https://cdn.pixabay.com/photo/2015/03/21/19/27/pc-684125_1280.jpg" class="card-img-top"
-                        alt="...">
-                    <div class="card-body d-flex flex-column">
-                        <h6 class="card-title text-info">Teclado Mecánico</h6>
-                        <span class="fw-bold text-success mt-auto">$49.99</span>
-                        <a href="#" class="btn btn-sm btn-primary w-100 mt-2">Comprar</a>
-                    </div>
-                </div>
-                <div class="card bg-dark text-light border-secondary flex-shrink-0" style="width: 16rem;">
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">-35%</span>
-                    <img src="https://cdn.pixabay.com/photo/2015/03/21/19/27/pc-684125_1280.jpg" class="card-img-top"
-                        alt="...">
-                    <div class="card-body d-flex flex-column">
-                        <h6 class="card-title text-info">Teclado Mecánico</h6>
-                        <span class="fw-bold text-success mt-auto">$49.99</span>
-                        <a href="#" class="btn btn-sm btn-primary w-100 mt-2">Comprar</a>
-                    </div>
-                </div>
-                <div class="card bg-dark text-light border-secondary flex-shrink-0" style="width: 16rem;">
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">-35%</span>
-                    <img src="https://cdn.pixabay.com/photo/2015/03/21/19/27/pc-684125_1280.jpg" class="card-img-top"
-                        alt="...">
-                    <div class="card-body d-flex flex-column">
-                        <h6 class="card-title text-info">Teclado Mecánico</h6>
-                        <span class="fw-bold text-success mt-auto">$49.99</span>
-                        <a href="#" class="btn btn-sm btn-primary w-100 mt-2">Comprar</a>
-                    </div>
-                </div>
-                <div class="card bg-dark text-light border-secondary flex-shrink-0" style="width: 16rem;">
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">-35%</span>
-                    <img src="https://cdn.pixabay.com/photo/2015/03/21/19/27/pc-684125_1280.jpg" class="card-img-top"
-                        alt="...">
-                    <div class="card-body d-flex flex-column">
-                        <h6 class="card-title text-info">Teclado Mecánico</h6>
-                        <span class="fw-bold text-success mt-auto">$49.99</span>
-                        <a href="#" class="btn btn-sm btn-primary w-100 mt-2">Comprar</a>
-                    </div>
-                </div>
-                <div class="card bg-dark text-light border-secondary flex-shrink-0" style="width: 16rem;">
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">-35%</span>
-                    <img src="https://cdn.pixabay.com/photo/2015/03/21/19/27/pc-684125_1280.jpg" class="card-img-top"
-                        alt="...">
-                    <div class="card-body d-flex flex-column">
-                        <h6 class="card-title text-info">Teclado Mecánico</h6>
-                        <span class="fw-bold text-success mt-auto">$49.99</span>
-                        <a href="#" class="btn btn-sm btn-primary w-100 mt-2">Comprar</a>
-                    </div>
-                </div>
+
+
+
+
+
             </div>
         </section>
 

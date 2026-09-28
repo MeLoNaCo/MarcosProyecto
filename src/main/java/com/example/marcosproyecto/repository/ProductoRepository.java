@@ -65,4 +65,13 @@ public class ProductoRepository {
     public List<Producto> findAll() {
         return productos;
     }
+
+    public Producto findById(Long id) {
+        for (Producto p : productos) {
+            if (p.getId().equals(id)) {
+                return p;
+            }
+        }
+        return null;
+    }
 }
