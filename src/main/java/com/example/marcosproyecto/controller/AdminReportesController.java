@@ -13,13 +13,6 @@ public class AdminReportesController {
 
     @GetMapping("/admin/reportes")
     public String reportes(Model model) {
-        model.addAttribute("reporte", Map.of(
-                "ventasMes", 0.0,
-                "ordenesTotales", 0,
-                "clientesNuevos", 0,
-                "ticketPromedio", 0.0,
-                "porCategoria", List.of(),
-                "masVendidos", List.of()));
         return "admin/reportes";
     }
 }
