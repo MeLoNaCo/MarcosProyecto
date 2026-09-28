@@ -51,7 +51,7 @@
                             <i class="bi bi-shield-lock me-2"></i>Seguridad
                         </button>
                     </div>
-                    <a th:if="${session.usuario != null and session.usuario.rol == 'ADMIN'}" th:href="@{/admin}"
+                    <a th:if="${session.usuario != null and session.usuario.rol == 'ADMIN'}" th:href="@{/dashboard}"
                         class="btn btn-outline-warning w-100 mt-2">
                         <i class="bi bi-speedometer2 me-2"></i>Admin
                     </a>
@@ -65,7 +65,9 @@
                         <div class="card bg-dark text-light border-secondary">
                             <div class="card-body">
                                 <h2 class="h5 text-info mb-3">Datos personales</h2>
-                                <form onsubmit="return false;">
+                                <div th:if="${errorPerfil}" class="alert alert-danger" th:text="${errorPerfil}">Error</div>
+                                <div th:if="${okPerfil}" class="alert alert-success" th:text="${okPerfil}">OK</div>
+                                <form th:action="@{/cuenta/perfil}" method="post">
                                     <div class="mb-3">
                                         <label class="form-label">Avatar</label>
                                         <input type="file" class="form-control" accept="image/*">
@@ -73,24 +75,30 @@
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <label class="form-label">Nombre</label>
-                                            <input type="text" class="form-control" placeholder="Tu nombre">
+                                            <input type="text" name="nombre" required class="form-control"
+                                                th:value="${session.usuario.nombre}" placeholder="Tu nombre">
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label">Apellidos</label>
-                                            <input type="text" class="form-control" placeholder="Tus apellidos">
+                                            <input type="text" name="apellidos" required class="form-control"
+                                                th:value="${session.usuario.apellidos}" placeholder="Tus apellidos">
                                         </div>
                                     </div>
                                     <div class="row g-3 mt-1">
                                         <div class="col-md-6">
                                             <label class="form-label">Correo electrónico</label>
-                                            <input type="email" class="form-control" placeholder="nombre@ejemplo.com">
+                                            <input type="email" name="email" required class="form-control"
+                                                th:value="${session.usuario.email}" placeholder="nombre@ejemplo.com">
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label">Teléfono</label>
-                                            <input type="tel" class="form-control" placeholder="+51 999 999 999">
+                                            <input type="tel" name="telefono" class="form-control"
+                                                th:value="${session.usuario.telefono}" placeholder="+51 999 999 999"
+                                                pattern="\+?[0-9 ]{7,15}"
+                                                title="Solo números, + inicial opcional, entre 7 y 15 dígitos">
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary mt-3">Guardar cambios</button>
+                                    <button type="submit" class="btn btn-primary mt-3">Guardar cambios</button>
                                 </form>
                             </div>
                         </div>
@@ -164,34 +172,72 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>#0001</td>
-                                                <td>20/09/2026</td>
-                                                <td class="text-success fw-bold">S/ 1,139.98</td>
-                                                <td><span class="badge bg-success">Entregado</span></td>
+                                            <tr th:each="v : ${misPedidos}">
+                                                <td th:text="'#' + ${#numbers.formatInteger(v.id, 4)}">#0001</td>
+                                                <td th:text="${#temporals.format(v.fecha, 'dd/MM/yyyy')}">fecha</td>
+                                                <td class="text-success fw-bold"
+                                                    th:text="'S/ ' + ${#numbers.formatDecimal(v.total, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</td>
+                                                <td><span class="badge bg-success" th:text="${v.estado}">PAGADO</span></td>
                                                 <td class="text-end">
-                                                    <button class="btn btn-sm btn-outline-info">Ver detalle</button>
+                                                    <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                                        th:data-bs-target="'#modalVenta' + ${v.id}">Ver detalle</button>
                                                     <button class="btn btn-sm btn-outline-secondary">
                                                         <i class="bi bi-file-earmark-pdf"></i> PDF
                                                     </button>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>#0002</td>
-                                                <td>25/09/2026</td>
-                                                <td class="text-success fw-bold">S/ 64.99</td>
-                                                <td><span class="badge bg-warning text-dark">Enviado</span></td>
-                                                <td class="text-end">
-                                                    <button class="btn btn-sm btn-outline-info">Ver detalle</button>
-                                                    <button class="btn btn-sm btn-outline-secondary">
-                                                        <i class="bi bi-file-earmark-pdf"></i> PDF
-                                                    </button>
-                                                </td>
+                                            <tr th:if="${#lists.isEmpty(misPedidos)}">
+                                                <td colspan="5" class="text-center text-secondary">Aún no tienes pedidos.</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <p class="text-secondary small mb-0">El detalle de artículos por pedido se conectará al backend en el siguiente paso.</p>
+                                <p class="text-secondary small mb-0">El detalle de artículos por pedido se abre con Ver detalle.</p>
+                            </div>
+                        </div>
+
+                        <div th:each="v : ${misPedidos}" class="modal fade" th:id="'modalVenta' + ${v.id}"
+                            tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content bg-dark text-light border-secondary">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title"
+                                            th:text="'Pedido #' + ${#numbers.formatInteger(v.id, 4)}">Pedido</h5>
+                                        <button type="button" class="btn-close btn-close-white"
+                                            data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="text-secondary small"
+                                            th:text="${#temporals.format(v.fecha, 'dd/MM/yyyy HH:mm')}">fecha</p>
+                                        <p class="text-secondary small mb-2"
+                                            th:text="'Envío: ' + ${v.direccion}">Envío</p>
+                                        <table class="table table-dark table-sm align-middle">
+                                            <thead>
+                                                <tr>
+                                                    <th>Producto</th>
+                                                    <th>Cant.</th>
+                                                    <th>Subtotal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="d : ${v.detalles}">
+                                                    <td th:text="${d.producto.nombre}">Producto</td>
+                                                    <td th:text="${d.cantidad}">1</td>
+                                                    <td th:text="'S/ ' + ${#numbers.formatDecimal(d.subtotal, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="d-flex justify-content-between fw-bold">
+                                            <span>Total</span>
+                                            <span class="text-success"
+                                                th:text="'S/ ' + ${#numbers.formatDecimal(v.total, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cerrar</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

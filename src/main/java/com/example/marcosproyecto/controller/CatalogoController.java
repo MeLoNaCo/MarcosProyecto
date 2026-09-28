@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-// TODO Avance 2: rutas /catalogo, /producto-detalle, /carrito, /checkout.
+// TODO Avance 2: rutas /catalogo y /producto-detalle. Carrito y pago en CarritoController.
 @Controller
 public class CatalogoController {
 
@@ -28,20 +28,5 @@ public class CatalogoController {
         model.addAttribute("categoriaActiva", categoria);
 
         return "tienda/catalogo";
-    }
-
-    @GetMapping("/carrito")
-    public String carrito(Model model) {
-        return "tienda/carrito";
-    }
-
-    @GetMapping("/checkout")
-    public String checkout(Model model) {
-        return "tienda/checkout";
-    }
-
-    @GetMapping("/pago-resultado")
-    public String pagoResultado(Model model) {
-        return "tienda/pago-resultado";
     }
 }

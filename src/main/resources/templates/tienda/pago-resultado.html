@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-bs-theme="dark">
+<html lang="es" data-bs-theme="dark" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -32,7 +32,11 @@
                         del Comprobante</h5>
                     <div class="d-flex justify-content-between text-secondary mb-1">
                         <span>N° de Operación:</span>
-                        <span class="text-light fw-bold">#HG-2026-8942</span>
+                        <span class="text-light fw-bold" th:text="'#HG-' + ${venta.id}">#HG-1</span>
+                    </div>
+                    <div class="d-flex justify-content-between text-secondary mb-1">
+                        <span>Fecha:</span>
+                        <span class="text-light" th:text="${#temporals.format(venta.fecha, 'dd/MM/yyyy HH:mm')}">fecha</span>
                     </div>
                     <div class="d-flex justify-content-between text-secondary mb-1">
                         <span>Método de Pago:</span>
@@ -40,12 +44,20 @@
                     </div>
                     <div class="d-flex justify-content-between text-secondary mb-1">
                         <span>Cliente:</span>
-                        <span class="text-light">Jose Vivanco</span>
+                        <span class="text-light" th:text="${venta.nombreComprador}">Cliente</span>
+                    </div>
+                    <div class="d-flex justify-content-between text-secondary mb-1">
+                        <span>Dirección:</span>
+                        <span class="text-light" th:text="${venta.direccion}">Dirección</span>
+                    </div>
+                    <div class="d-flex justify-content-between text-secondary mb-1">
+                        <span>Artículos:</span>
+                        <span class="text-light" th:text="${venta.detalles.size()}">0</span>
                     </div>
                     <hr class="border-secondary">
                     <div class="d-flex justify-content-between text-light fw-bold fs-5">
                         <span>Monto Total Cancelado:</span>
-                        <span class="text-info">S/ 1,344.02</span>
+                        <span class="text-info" th:text="'S/ ' + ${#numbers.formatDecimal(venta.total, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
                     </div>
                 </div>
 
