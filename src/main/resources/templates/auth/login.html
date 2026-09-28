@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-bs-theme="dark">
+<html lang="es" data-bs-theme="dark" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -14,7 +14,7 @@
     
     <nav class="navbar bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="../index.html">
+            <a class="navbar-brand" th:href="@{/}">
                 <img src="../img/Herogameslogo.png" alt="Bootstrap" width="60" height="48">
                 HeroGames
             </a>
@@ -27,16 +27,17 @@
 
                 <h2 class="card-title text-center mb-4 text-info fw-bold">Iniciar Sesión</h2>
 
-                <form>
+                <form th:action="@{/login}" method="post">
+                    <div th:if="${error}" class="alert alert-danger" th:text="${error}">Error</div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1"
+                        <input type="email" class="form-control" id="exampleInputEmail1" name="email"
                             placeholder="nombre@ejemplo.com" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="••••••••"
+                        <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="••••••••"
                             required>
                     </div>
 
@@ -52,11 +53,7 @@
                     <button type="submit" class="btn btn-primary w-100 fw-bold">Ingresar</button>
 
                     <div class="mt-3 text-center">
-                        <a href="registro.html" class="text-decoration-none text-info">¿No tienes una cuenta? Regístrate aquí</a>
-                    </div>
-
-                    <div class="mt-3 text-center">
-                        <a href="admin/dashboard.html" class="btn btn-primary w-100 fw-bold">Admin</a>
+                        <a th:href="@{/registro}" class="text-decoration-none text-info">¿No tienes una cuenta? Regístrate aquí</a>
                     </div>
                 </form>
 

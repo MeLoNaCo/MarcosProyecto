@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <footer th:fragment="footer" class="bg-body-tertiary text-secondary py-4 mt-auto border-top border-secondary-subtle">
+    <div class="container">
+        <div class="row gy-3 align-items-center">
+
+            <div class="col-md-4 text-center text-md-start">
+                <a th:href="@{/}"
+                   class="text-white text-decoration-none fw-bold d-inline-flex align-items-center gap-2 mb-1">
+                    <img src="img/Herogameslogo.png" alt="Logo" width="48" height="40">
+                    Hero Games
+                </a>
+                <p class="small mb-0 text-secondary">&copy; 2026 Hero Games. Todos los derechos reservados.</p>
+            </div>
+
+            <div class="col-md-4 text-center">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item me-3">
+                        <a href="#" class="link-secondary text-decoration-none small">Privacidad</a>
+                    </li>
+                    <li class="list-inline-item me-3">
+                        <a href="#" class="link-secondary text-decoration-none small">Términos</a>
+                    </li>
+                    <li class="list-inline-item me-3">
+                        <a th:href="@{/contact}" class="link-secondary text-decoration-none small">Contacto</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#" class="link-secondary text-decoration-none small">Soporte</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 text-center text-md-end">
+                <div class="d-inline-flex gap-3 fs-5">
+                    <a href="https://x.com" target="_blank" class="link-secondary" aria-label="X (Twitter)">
+                        <i class="bi bi-twitter-x"></i>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" class="link-secondary" aria-label="Instagram">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="https://tiktok.com" target="_blank" class="link-secondary" aria-label="TikTok">
+                        <i class="bi bi-tiktok"></i>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" class="link-secondary" aria-label="LinkedIn">
+                        <i class="bi bi-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</footer>
+</body>
+</html>

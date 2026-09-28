@@ -1,6 +1,5 @@
 package com.example.marcosproyecto.model;
 
-// Avance 2: POJO dummy (sin @Entity). En Avance 3 agregar @Entity + JPA.
 public class Producto {
 
     private Long id;
@@ -9,24 +8,56 @@ public class Producto {
     private double precio;
     private int stock;
     private String imagenUrl;
-    private int oferta; // 0-90, default 0. Es el atributo oferta.
+    private int oferta;
     private boolean activo = true;
     private Categoria categoria;
 
     public Producto() {
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Producto(Long id, String nombre, String descripcion, double precio,
+                    int stock, String imagenUrl, int oferta, Categoria categoria) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        setPrecio(precio);
+        setStock(stock);
+        this.imagenUrl = imagenUrl;
+        setOferta(oferta);
+        this.categoria = categoria;
+    }
 
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public double getPrecio() { return precio; }
-    public void setPrecio(double precio) { this.precio = Math.max(0, precio); }
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = Math.max(0, precio);
+    }
 
     public int getStock() { return stock; }
     public void setStock(int stock) { this.stock = Math.max(0, stock); }
@@ -48,7 +79,6 @@ public class Producto {
     public Categoria getCategoria() { return categoria; }
     public void setCategoria(Categoria categoria) { this.categoria = categoria; }
 
-    // Regla: se aplica el mayor entre oferta del producto y descuento de categoría, nunca se suman.
     public double getPrecioFinal() {
         int pctCat = (categoria != null) ? categoria.getDescuentoPct() : 0;
         int pct = Math.max(oferta, pctCat);
