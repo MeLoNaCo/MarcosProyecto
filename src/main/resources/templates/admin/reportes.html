@@ -1,251 +1,197 @@
 <!DOCTYPE html>
-<html lang="es" data-bs-theme="dark">
+<html lang="es" data-bs-theme="dark" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hero Games - Reportes</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 
 <body>
 
-    <!-- Barra superior (solo móvil) -->
-    <nav class="navbar bg-body-tertiary border-bottom d-md-none">
-        <div class="container-fluid">
-            <span class="navbar-brand fst-italic text-info mb-0">Hero Games</span>
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"
-                aria-controls="sidebarMenu" aria-label="Abrir menú">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </nav>
-
+<nav class="navbar bg-body-tertiary border-bottom d-md-none">
     <div class="container-fluid">
-        <div class="row min-vh-100">
-
-            <aside th:replace="~{fragments/admin-sidebar :: admin-sidebar('reportes')}">>
-            </aside>
-
-            <!-- Contenido -->
-            <main class="col-md-9 col-xl-10 p-3 p-md-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="mb-0 fs-3">Reportes Generales</h2>
-                </div>
-
-                <div class="row g-3 mb-4">
-                    <div class="col-6 col-xl-3">
-                        <div class="card h-100">
-                            <div class="card-body d-flex align-items-center gap-3">
-                                <i class="bi bi-cash-coin fs-3 lh-1 p-3 rounded-circle bg-info bg-opacity-25 text-info"></i>
-                                <div>
-                                    <h3 class="mb-0 fs-4">S/ 12,340</h3>
-                                    <small class="text-secondary d-block">Ventas</small>
-                                    <small class="text-info">Este mes</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-xl-3">
-                        <div class="card h-100">
-                            <div class="card-body d-flex align-items-center gap-3">
-                                <i class="bi bi-receipt fs-3 lh-1 p-3 rounded-circle bg-info bg-opacity-25 text-info"></i>
-                                <div>
-                                    <h3 class="mb-0 fs-4">86</h3>
-                                    <small class="text-secondary d-block">Órdenes</small>
-                                    <small class="text-info">Este mes</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-xl-3">
-                        <div class="card h-100">
-                            <div class="card-body d-flex align-items-center gap-3">
-                                <i class="bi bi-person-plus fs-3 lh-1 p-3 rounded-circle bg-info bg-opacity-25 text-info"></i>
-                                <div>
-                                    <h3 class="mb-0 fs-4">23</h3>
-                                    <small class="text-secondary d-block">Usuarios registrados</small>
-                                    <small class="text-info">Este mes</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-xl-3">
-                        <div class="card h-100">
-                            <div class="card-body d-flex align-items-center gap-3">
-                                <i class="bi bi-tag fs-3 lh-1 p-3 rounded-circle bg-info bg-opacity-25 text-info"></i>
-                                <div>
-                                    <h3 class="mb-0 fs-4">S/ 143.50</h3>
-                                    <small class="text-secondary d-block">Ticket promedio</small>
-                                    <small class="text-info">Este mes</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row g-3 mb-4">
-                    <div class="col-12 col-xl-8">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3">
-                                    <div>
-                                        <h5 class="card-title mb-0">Resumen de actividad</h5>
-                                        <small class="text-secondary" id="rangoTexto"></small>
-                                    </div>
-                                    <div class="btn-group btn-group-sm" role="group" aria-label="Rango de tiempo" id="rangos">
-                                        <button type="button" class="btn btn-outline-info active" data-rango="1D">1D</button>
-                                        <button type="button" class="btn btn-outline-info" data-rango="7D">7D</button>
-                                        <button type="button" class="btn btn-outline-info" data-rango="1M">1M</button>
-                                        <button type="button" class="btn btn-outline-info" data-rango="1A">1A</button>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-wrap gap-4 mb-3">
-                                    <div>
-                                        <small class="text-secondary d-block">Productos vendidos</small>
-                                        <span class="fs-4 fw-bold" id="totalProductos">0</span>
-                                    </div>
-                                    <div>
-                                        <small class="text-secondary d-block">Usuarios registrados</small>
-                                        <span class="fs-4 fw-bold" id="totalUsuarios">0</span>
-                                    </div>
-                                </div>
-                                <canvas id="graficoActividad"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-xl-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <h5 class="card-title mb-0">Ingresos por categoría</h5>
-                                <small class="text-secondary d-block mb-3">Este mes</small>
-                                <canvas id="graficoCategorias"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3">Ventas por Categoría</h5>
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle mb-0">
-                                <thead>
-                                    <tr><th>Categoría</th><th>Unidades Vendidas</th><th>Ingresos</th></tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td>Componentes</td><td>140</td><td class="text-success fw-bold">S/ 7,820.00</td></tr>
-                                    <tr><td>Periféricos</td><td>95</td><td class="text-success fw-bold">S/ 3,410.00</td></tr>
-                                    <tr><td>Accesorios</td><td>60</td><td class="text-success fw-bold">S/ 1,110.00</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3">Productos Más Vendidos</h5>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Memoria RAM 16GB DDR4
-                                <span class="badge text-bg-warning rounded-pill">58 unidades</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Mouse Gamer RGB
-                                <span class="badge text-bg-warning rounded-pill">44 unidades</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Teclado Mecánico 60%
-                                <span class="badge text-bg-warning rounded-pill">31 unidades</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </main>
-
-        </div>
+        <span class="navbar-brand fst-italic text-info mb-0">Hero Games</span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
     </div>
+</nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-    <script>
-        // Colores tomados del tema de Bootstrap (respetan data-bs-theme="dark")
-        const css = getComputedStyle(document.documentElement);
-        const color = n => css.getPropertyValue(n).trim();
-        const rgba = (n, a) => `rgba(${color(n + '-rgb')}, ${a})`;
-        Chart.defaults.color = color('--bs-secondary-color');
-        Chart.defaults.borderColor = color('--bs-border-color');
+<div class="container-fluid">
+    <div class="row min-vh-100">
 
-        // Datos de ejemplo. Misma forma que devolverá el backend.
-        const DATOS = {
-            '1D': { texto: 'Hoy, por horas', labels: ['8h', '10h', '12h', '14h', '16h', '18h', '20h', '22h'], productos: [2, 5, 4, 9, 12, 15, 10, 6], usuarios: [0, 1, 1, 2, 1, 3, 2, 1] },
-            '7D': { texto: 'Últimos 7 días', labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], productos: [18, 25, 22, 30, 41, 55, 38], usuarios: [2, 4, 3, 5, 6, 9, 5] },
-            '1M': { texto: 'Últimos 30 días, por semana', labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'], productos: [120, 165, 140, 210], usuarios: [14, 20, 17, 26] },
-            '1A': { texto: 'Últimos 12 meses', labels: ['Oct', 'Nov', 'Dic', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'], productos: [320, 410, 580, 300, 280, 340, 390, 420, 450, 480, 520, 535], usuarios: [40, 52, 75, 38, 35, 44, 50, 55, 58, 62, 70, 73] }
-        };
+        <aside th:replace="~{fragments/admin-sidebar :: admin-sidebar('reportes')}"></aside>
 
-        // Al conectar el backend, solo cambia esta función por el fetch.
-        async function obtenerDatos(rango) {
-            return DATOS[rango];
-            // const r = await fetch(`/api/reportes/actividad?rango=${rango}`);
-            // return await r.json();
-        }
+        <main class="col-md-9 col-xl-10 p-3 p-md-4">
+            <h2 class="mb-4 fs-3">Reportes Generales</h2>
 
-        const grafico = new Chart(document.getElementById('graficoActividad'), {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: [
-                    { label: 'Productos vendidos', data: [], borderColor: color('--bs-info'), backgroundColor: rgba('--bs-info', .2), fill: true, tension: .35, pointRadius: 3 },
-                    { label: 'Usuarios registrados', data: [], borderColor: color('--bs-success'), backgroundColor: rgba('--bs-success', .2), fill: true, tension: .35, pointRadius: 3 }
-                ]
-            },
-            options: {
-                responsive: true,
-                aspectRatio: 2,
-                interaction: { mode: 'index', intersect: false },
-                plugins: { legend: { position: 'bottom' } },
-                scales: { y: { beginAtZero: true } }
-            }
-        });
+            <div class="row g-3 mb-4">
+                <div class="col-6 col-xl-3">
+                    <div class="card h-100">
+                        <div class="card-body d-flex align-items-center gap-3">
+                            <i class="bi bi-cash-coin fs-3 p-3 rounded-circle bg-info bg-opacity-25 text-info"></i>
+                            <div>
+                                <h3 class="mb-0 fs-4" th:text="'S/ ' + ${totalVentasG}">S/ 0</h3>
+                                <small class="text-secondary d-block">Ventas (Este mes)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-xl-3">
+                    <div class="card h-100">
+                        <div class="card-body d-flex align-items-center gap-3">
+                            <i class="bi bi-receipt fs-3 p-3 rounded-circle bg-info bg-opacity-25 text-info"></i>
+                            <div>
+                                <h3 class="mb-0 fs-4" th:text="${totalOrdenesG}">0</h3>
+                                <small class="text-secondary d-block">Órdenes (Este mes)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-xl-3">
+                    <div class="card h-100">
+                        <div class="card-body d-flex align-items-center gap-3">
+                            <i class="bi bi-person-plus fs-3 p-3 rounded-circle bg-info bg-opacity-25 text-info"></i>
+                            <div>
+                                <h3 class="mb-0 fs-4">25</h3>
+                                <small class="text-secondary d-block">Usuarios (Este mes)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-xl-3">
+                    <div class="card h-100">
+                        <div class="card-body d-flex align-items-center gap-3">
+                            <i class="bi bi-tag fs-3 p-3 rounded-circle bg-info bg-opacity-25 text-info"></i>
+                            <div>
+                                <h3 class="mb-0 fs-4" th:text="'S/ ' + ${ticketPromedioG}">S/ 0</h3>
+                                <small class="text-secondary d-block">Ticket promedio</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        async function cargar(rango) {
-            const d = await obtenerDatos(rango);
-            grafico.data.labels = d.labels;
-            grafico.data.datasets[0].data = d.productos;
-            grafico.data.datasets[1].data = d.usuarios;
-            grafico.update();
-            const suma = a => a.reduce((x, y) => x + y, 0);
-            document.getElementById('totalProductos').textContent = suma(d.productos).toLocaleString('es-PE');
-            document.getElementById('totalUsuarios').textContent = suma(d.usuarios).toLocaleString('es-PE');
-            document.getElementById('rangoTexto').textContent = d.texto;
-        }
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">1. Ventas por Mes (S/)</h5>
+                            <canvas id="grafico1"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">2. Órdenes por Mes</h5>
+                            <canvas id="grafico2"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">3. Usuarios Registrados</h5>
+                            <canvas id="grafico3"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">4. Productos Vendidos</h5>
+                            <canvas id="grafico4"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">5. Ticket Promedio (S/)</h5>
+                            <canvas id="grafico5"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        document.getElementById('rangos').addEventListener('click', e => {
-            const btn = e.target.closest('[data-rango]');
-            if (!btn) return;
-            document.querySelectorAll('#rangos .btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            cargar(btn.dataset.rango);
-        });
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Ventas por Categoría</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                            <tr><th>Categoría</th><th>Unidades Vendidas</th><th>Ingresos</th></tr>
+                            </thead>
+                            <tbody>
+                            <tr><td>Componentes</td><td>140</td><td class="text-success fw-bold">S/ 7,820.00</td></tr>
+                            <tr><td>Periféricos</td><td>95</td><td class="text-success fw-bold">S/ 3,410.00</td></tr>
+                            <tr><td>Accesorios</td><td>60</td><td class="text-success fw-bold">S/ 1,110.00</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
-        new Chart(document.getElementById('graficoCategorias'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Componentes', 'Periféricos', 'Accesorios'],
-                datasets: [{ data: [7820, 3410, 1110], backgroundColor: [color('--bs-info'), color('--bs-primary'), color('--bs-success')], borderColor: color('--bs-body-bg') }]
-            },
-            options: { cutout: '65%', plugins: { legend: { position: 'bottom' } } }
-        });
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Productos Más Vendidos</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Memoria RAM 16GB DDR4
+                            <span class="badge text-bg-warning rounded-pill">58 unidades</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Mouse Gamer RGB
+                            <span class="badge text-bg-warning rounded-pill">44 unidades</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Teclado Mecánico 60%
+                            <span class="badge text-bg-warning rounded-pill">31 unidades</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
 
-        cargar('1D');
-    </script>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+<script th:inline="javascript">
+    const meses = [[${meses}]];
+
+    new Chart(document.getElementById('grafico1'), {
+        type: 'line',
+        data: { labels: meses, datasets: [{ label: 'Ventas (S/)', data: [[${ventas}]] }] }
+    });
+
+    new Chart(document.getElementById('grafico2'), {
+        type: 'line',
+        data: { labels: meses, datasets: [{ label: 'Órdenes', data: [[${pedidos}]] }] }
+    });
+
+    new Chart(document.getElementById('grafico3'), {
+        type: 'line',
+        data: { labels: meses, datasets: [{ label: 'Nuevos Usuarios', data: [[${clientes}]] }] }
+    });
+
+    new Chart(document.getElementById('grafico4'), {
+        type: 'line',
+        data: { labels: meses, datasets: [{ label: 'Productos', data: [[${productos}]] }] }
+    });
+
+    new Chart(document.getElementById('grafico5'), {
+        type: 'line',
+        data: { labels: meses, datasets: [{ label: 'Ticket Promedio (S/)', data: [[${ticket}]] }] }
+    });
+</script>
 </body>
 
 </html>

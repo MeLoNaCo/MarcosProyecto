@@ -13,6 +13,7 @@ import java.util.List;
 public class ProductoRepository {
 
     private final List<Producto> productos = new ArrayList<>();
+    private long siguienteId = 7;
 
     public ProductoRepository(CategoriaRepository categoriaRepository) {
         Categoria laptops = categoriaRepository.findById(2L);
@@ -73,5 +74,26 @@ public class ProductoRepository {
             }
         }
         return null;
+    }
+
+    public Producto save(Producto producto) {
+        if (producto.getId() == null) {
+            producto.setId(siguienteId);
+            siguienteId = siguienteId + 1;
+        }
+        productos.add(producto);
+        return producto;
+    }
+
+    public void deleteById(Long id) {
+        Producto borrar = null;
+        for (Producto p : productos) {
+            if (p.getId().equals(id)) {
+                borrar = p;
+            }
+        }
+        if (borrar != null) {
+            productos.remove(borrar);
+        }
     }
 }

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-// Avance 2: backend dummy con List en memoria. En Avance 3 cambiar a JpaRepository.
 @Repository
 public class UsuarioRepository {
 

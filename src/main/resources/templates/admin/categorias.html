@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hero Games - Clientes</title>
+    <title>Hero Games - Categorías</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -13,7 +13,6 @@
 
 <body>
 
-    <!-- Barra superior (solo móvil) -->
     <nav class="navbar bg-body-tertiary border-bottom d-md-none">
         <div class="container-fluid">
             <span class="navbar-brand fst-italic text-info mb-0">Hero Games</span>
@@ -27,30 +26,33 @@
     <div class="container-fluid">
         <div class="row min-vh-100">
 
-            <aside th:replace="~{fragments/admin-sidebar :: admin-sidebar('clientes')}">>
+            <aside th:replace="~{fragments/admin-sidebar :: admin-sidebar('categorias')}">>
             </aside>
 
-            <!-- Contenido -->
             <main class="col-md-9 col-xl-10 p-3 p-md-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="mb-0 fs-3">Clientes</h2>
-                    <a th:href="@{/admin/clientes/nuevo}" class="btn btn-primary">Agregar Cliente</a>
+                    <h2 class="mb-0 fs-3">Categorías</h2>
+                    <a th:href="@{/admin/categorias/nuevo}" class="btn btn-primary">Agregar Categoría</a>
                 </div>
+
+                <div th:if="${aviso}" class="alert alert-warning" th:text="${aviso}">Aviso</div>
+
                 <div class="card">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
                             <thead>
-                                <tr><th>#</th><th>Nombres</th><th>Apellidos</th><th>Correo</th><th>Teléfono</th><th>Estado</th></tr>
+                                <tr><th>Código</th><th>Nombre</th><th>Descripción</th><th>Descuento</th><th>Estado</th><th class="text-end">Acciones</th></tr>
                             </thead>
                             <tbody>
-                            <tr th:each="usuario, iterStat : ${usuarios}">
-                                <td th:text="${iterStat.count}">1</td>
-                                <td th:text="${usuario.nombre}">Nombres</td>
-                                <td th:text="${usuario.apellidos}">Apellidos</td>
-                                <td th:text="${usuario.email}">Email</td>
-                                <td th:text="${usuario.telefono}">Teléfono</td>
-                                <td th:text="${usuario.activo}">Estado</td>
-                            </tr>
+                                <tr th:each="c : ${categorias}">
+                                    <td th:text="'#C' + ${#numbers.formatInteger(c.id, 3)}">#C001</td>
+                                    <td th:text="${c.nombre}">Nombre</td>
+                                    <td th:text="${c.descripcion}">Desc</td>
+                                    <td th:text="${c.descuentoPct} + '%'">0%</td>
+                                    <td><span th:if="${c.activo}" class="badge text-bg-success">Activa</span><span th:unless="${c.activo}" class="badge text-bg-secondary">Inactiva</span></td>
+                                    <td class="text-end"><a th:href="@{/admin/categorias/editar/{id}(id=${c.id})}" class="btn btn-sm btn-outline-info">Editar</a> <form th:action="@{/admin/categorias/eliminar}" method="post" class="d-inline"><input type="hidden" name="id" th:value="${c.id}"><button class="btn btn-sm btn-outline-danger">Eliminar</button></form></td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(categorias)}"><td colspan="6" class="text-center text-secondary">Sin categorías registradas.</td></tr>
                             </tbody>
                         </table>
                     </div>

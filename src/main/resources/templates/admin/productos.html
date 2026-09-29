@@ -34,7 +34,7 @@
             <main class="col-md-9 col-xl-10 p-3 p-md-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="mb-0 fs-3">Productos</h2>
-                    <button class="btn btn-primary">Agregar Producto</button>
+                    <a th:href="@{/admin/productos/nuevo}" class="btn btn-primary">Agregar Producto</a>
                 </div>
                 <div class="card">
                     <div class="table-responsive">
@@ -43,12 +43,29 @@
                                 <tr><th>Código</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Estado</th><th class="text-end">Acciones</th></tr>
                             </thead>
                             <tbody>
-                            <tr><td>#P001</td><td>Mouse Gamer RGB</td><td>Periféricos</td><td><span class="text-success fw-bold">S/ 89.90</span></td><td>32</td><td><span class="badge text-bg-success">Disponible</span></td><td class="text-end"><a href="#" class="btn btn-sm btn-outline-secondary">Ver</a> <a href="#" class="btn btn-sm btn-outline-info">Editar</a> <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a></td></tr>
-                            <tr><td>#P002</td><td>Teclado Mecánico 60%</td><td>Periféricos</td><td><span class="text-success fw-bold">S/ 159.00</span></td><td>18</td><td><span class="badge text-bg-success">Disponible</span></td><td class="text-end"><a href="#" class="btn btn-sm btn-outline-secondary">Ver</a> <a href="#" class="btn btn-sm btn-outline-info">Editar</a> <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a></td></tr>
-                            <tr><td>#P003</td><td>Tarjeta Gráfica RTX 4060</td><td>Componentes</td><td><span class="text-success fw-bold">S/ 1,450.00</span></td><td>0</td><td><span class="badge text-bg-danger">Agotado</span></td><td class="text-end"><a href="#" class="btn btn-sm btn-outline-secondary">Ver</a> <a href="#" class="btn btn-sm btn-outline-info">Editar</a> <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a></td></tr>
-                            <tr><td>#P004</td><td>Memoria RAM 16GB DDR4</td><td>Componentes</td><td><span class="text-success fw-bold">S/ 220.00</span></td><td>45</td><td><span class="badge text-bg-success">Disponible</span></td><td class="text-end"><a href="#" class="btn btn-sm btn-outline-secondary">Ver</a> <a href="#" class="btn btn-sm btn-outline-info">Editar</a> <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a></td></tr>
+                            <tr th:each="p : ${productos}"><td th:text="'#P' + ${#numbers.formatInteger(p.id, 3)}">#P001</td><td th:text="${p.nombre}">Nombre</td><td th:text="${p.categoria.nombre}">Cat</td><td><span class="text-success fw-bold" th:text="'S/ ' + ${#numbers.formatDecimal(p.precioFinal, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span></td><td th:text="${p.stock}">0</td><td><span th:if="${p.stock > 0}" class="badge text-bg-success">Disponible</span><span th:unless="${p.stock > 0}" class="badge text-bg-danger">Agotado</span></td><td class="text-end"><button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" th:data-bs-target="'#modalProd' + ${p.id}">Ver</button> <a th:href="@{/admin/productos/editar/{id}(id=${p.id})}" class="btn btn-sm btn-outline-info">Editar</a> <form th:action="@{/admin/productos/eliminar}" method="post" class="d-inline"><input type="hidden" name="id" th:value="${p.id}"><button class="btn btn-sm btn-outline-danger">Eliminar</button></form></td></tr>
+                            <tr th:if="${#lists.isEmpty(productos)}"><td colspan="7" class="text-center text-secondary">Sin productos registrados.</td></tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <div th:each="p : ${productos}" class="modal fade" th:id="'modalProd' + ${p.id}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" th:text="${p.nombre}">Producto</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="text-secondary" th:text="${p.descripcion}">Desc</p>
+                                <p class="mb-1" th:text="'Categoría: ' + ${p.categoria.nombre}">Cat</p>
+                                <p class="mb-1" th:text="'Precio: S/ ' + ${#numbers.formatDecimal(p.precioFinal, 1, 'COMMA', 2, 'POINT')}">Precio</p>
+                                <p class="mb-0" th:text="'Stock: ' + ${p.stock}">Stock</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

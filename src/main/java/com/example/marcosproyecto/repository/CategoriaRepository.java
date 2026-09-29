@@ -11,6 +11,7 @@ import java.util.List;
 public class CategoriaRepository {
 
     private final List<Categoria> categoria = new ArrayList<>();
+    private long siguienteId = 5;
     public CategoriaRepository() {
         Categoria perifericos = new Categoria(1L,"Perifericos", 0);
         categoria.add(perifericos);
@@ -33,6 +34,27 @@ public class CategoriaRepository {
             }
         }
         throw new IllegalArgumentException("Categoria no existe: " + id);
+    }
+
+    public Categoria save(Categoria c) {
+        if (c.getId() == null) {
+            c.setId(siguienteId);
+            siguienteId = siguienteId + 1;
+        }
+        categoria.add(c);
+        return c;
+    }
+
+    public void deleteById(Long id) {
+        Categoria borrar = null;
+        for (Categoria c : categoria) {
+            if (c.getId().equals(id)) {
+                borrar = c;
+            }
+        }
+        if (borrar != null) {
+            categoria.remove(borrar);
+        }
     }
 
 }

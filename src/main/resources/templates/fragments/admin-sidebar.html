@@ -43,12 +43,16 @@
                        th:href="@{/admin/productos}"><i class="bi bi-controller me-2"></i>Productos</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" th:classappend="${activa == 'categorias'} ? 'active'"
+                       th:href="@{/admin/categorias}"><i class="bi bi-tags me-2"></i>Categorías</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" th:classappend="${activa == 'reportes'} ? 'active'"
                        th:href="@{/admin/reportes}"><i class="bi bi-bar-chart-line me-2"></i>Reportes</a>
                 </li>
             </ul>
             <div class="pt-4"></div>
-            <a th:href="@{/index}" class="btn btn-outline-danger w-100 mt-auto"><i class="bi bi-box-arrow-right me-2"></i>salir</a>
+            <a th:href="@{/logout}" class="btn btn-outline-danger w-100 mt-auto"><i class="bi bi-box-arrow-right me-2"></i>salir</a>
         </div>
     </div>
 </aside>

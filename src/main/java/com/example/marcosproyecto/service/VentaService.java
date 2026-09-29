@@ -44,6 +44,10 @@ public class VentaService {
         return ventaRepository.findByUsuarioId(usuarioId);
     }
 
+    public List<Venta> listarTodas() {
+        return ventaRepository.findAll();
+    }
+
     public Venta buscarPorId(Long id) {
         return ventaRepository.findById(id);
     }

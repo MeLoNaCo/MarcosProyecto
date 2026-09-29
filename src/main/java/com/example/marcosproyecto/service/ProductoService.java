@@ -2,6 +2,7 @@ package com.example.marcosproyecto.service;
 
 import com.example.marcosproyecto.model.DetalleVenta;
 import com.example.marcosproyecto.model.Producto;
+import com.example.marcosproyecto.repository.CategoriaRepository;
 import com.example.marcosproyecto.repository.ProductoRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +14,69 @@ import java.util.List;
 public class ProductoService {
 
     private final ProductoRepository productoRepository;
+    private final CategoriaRepository categoriaRepository;
 
-    public ProductoService(ProductoRepository productoRepository) {
+    public ProductoService(ProductoRepository productoRepository, CategoriaRepository categoriaRepository) {
         this.productoRepository = productoRepository;
+        this.categoriaRepository = categoriaRepository;
     }
 
     public List<Producto> listar() {
         return listarPorCategoria(null);
+    }
+
+    public List<Producto> listarTodas() {
+        return productoRepository.findAll();
+    }
+
+    public Producto buscarPorId(Long id) {
+        return productoRepository.findById(id);
+    }
+
+    public int contarPorCategoriaId(Long categoriaId) {
+        int n = 0;
+        for (Producto p : productoRepository.findAll()) {
+            if (p.getCategoria() != null && p.getCategoria().getId().equals(categoriaId)) {
+                n = n + 1;
+            }
+        }
+        return n;
+    }
+
+    // Crea o actualiza. Devuelve error o null si todo ok.
+    public String guardar(Producto producto) {
+        if (producto.getNombre() == null || producto.getNombre().isBlank()) {
+            return "El producto necesita un nombre";
+        }
+        if (producto.getCategoria() == null || producto.getCategoria().getId() == null) {
+            return "Elige una categoría";
+        }
+        try {
+            producto.setCategoria(categoriaRepository.findById(producto.getCategoria().getId()));
+        } catch (IllegalArgumentException e) {
+            return "La categoría elegida no existe";
+        }
+        if (producto.getId() == null) {
+            productoRepository.save(producto);
+            return null;
+        }
+        Producto actual = productoRepository.findById(producto.getId());
+        if (actual == null) {
+            return "Producto no encontrado";
+        }
+        actual.setNombre(producto.getNombre());
+        actual.setDescripcion(producto.getDescripcion());
+        actual.setPrecio(producto.getPrecio());
+        actual.setStock(producto.getStock());
+        actual.setOferta(producto.getOferta());
+        actual.setImagenUrl(producto.getImagenUrl());
+        actual.setActivo(producto.isActivo());
+        actual.setCategoria(producto.getCategoria());
+        return null;
+    }
+
+    public void eliminar(Long id) {
+        productoRepository.deleteById(id);
     }
 
     public List<Producto> listarPorCategoria(String categoria) {
