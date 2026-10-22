@@ -70,7 +70,7 @@
         </div>
 
         <section>
-            <h2 class="text-start my-4 text-light">Productos recomendados</h2>
+            <h2 class="text-start my-4 text-dark">Productos recomendados</h2>
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4">
                 <div class="col">
                     <div class="card h-100">
@@ -130,7 +130,7 @@
         </section>
 
         <section class="my-5">
-            <h2 class="text-light mb-4">Ofertas Destacadas</h2>
+            <h2 class="text-dark mb-4">Ofertas Destacadas</h2>
             <div class="d-flex flex-row flex-nowrap overflow-auto gap-3 pb-3 contenedor-scroll">
                 <div class="card bg-dark text-light border-secondary flex-shrink-0" style="width: 16rem;"
                     th:each="p : ${ofertas}">
@@ -156,16 +156,16 @@
 
 
         <section class="preguntas-frecuentes my-5">
-            <h2 class="text-light mb-4">Productos Más Vendidos</h2>
-            <div id="carouselMasVendidos" class="carousel slide" data-bs-ride="carousel">
+            <h2 class="text-dark mb-4">Productos Más Vendidos</h2>
+            <div id="carouselMasVendidos" class="carousel slide carousel-dark" data-bs-ride="carousel">
                 <div class="carousel-inner">
 
                     <div class="carousel-item active">
-                        <div class="card bg-dark text-light border-secondary overflow-hidden w-100">
+                        <div class="card bg-white text-light border-secondary overflow-hidden w-100">
                             <div class="row g-0 align-items-center">
                                 <div class="col-4 col-md-3">
                                     <img src="https://cdn.pixabay.com/photo/2015/03/21/19/27/pc-684125_1280.jpg"
-                                        class="img-fluid rounded-start h-100 object-fit-cover" alt="Silla Gamer">
+                                         class="img-fluid rounded-start h-100 object-fit-cover" alt="Silla Gamer">
                                 </div>
                                 <div class="col-8 col-md-9">
                                     <div class="card-body">
@@ -184,11 +184,11 @@
                     </div>
 
                     <div class="carousel-item">
-                        <div class="card bg-dark text-light border-secondary overflow-hidden w-100">
+                        <div class="card bg-white text-light border-secondary overflow-hidden w-100">
                             <div class="row g-0 align-items-center">
                                 <div class="col-4 col-md-3">
                                     <img src="https://cdn.pixabay.com/photo/2015/03/21/19/27/pc-684125_1280.jpg"
-                                        class="img-fluid rounded-start h-100 object-fit-cover" alt="Monitor">
+                                         class="img-fluid rounded-start h-100 object-fit-cover" alt="Monitor">
                                 </div>
                                 <div class="col-8 col-md-9">
                                     <div class="card-body">
@@ -207,11 +207,11 @@
                     </div>
 
                     <div class="carousel-item">
-                        <div class="card bg-dark text-light border-secondary overflow-hidden w-100">
+                        <div class="card bg-white text-light border-secondary overflow-hidden w-100">
                             <div class="row g-0 align-items-center">
                                 <div class="col-4 col-md-3">
                                     <img src="https://cdn.pixabay.com/photo/2015/03/21/19/27/pc-684125_1280.jpg"
-                                        class="img-fluid rounded-start h-100 object-fit-cover" alt="Teclado">
+                                         class="img-fluid rounded-start h-100 object-fit-cover" alt="Teclado">
                                 </div>
                                 <div class="col-8 col-md-9">
                                     <div class="card-body">
@@ -231,11 +231,11 @@
                 </div>
 
                 <button class="carousel-control-prev w-auto" type="button" data-bs-target="#carouselMasVendidos"
-                    data-bs-slide="prev">
+                        data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 </button>
                 <button class="carousel-control-next w-auto" type="button" data-bs-target="#carouselMasVendidos"
-                    data-bs-slide="next">
+                        data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 </button>
             </div>
