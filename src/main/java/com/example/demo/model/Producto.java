@@ -10,13 +10,14 @@ public class Producto {
     private String imagenUrl;
     private int oferta;
     private boolean activo = true;
-    private Categoria categoria;
+    private Long id_categoria;
+    private String nombreCategoria;
 
     public Producto() {
     }
 
     public Producto(Long id, String nombre, String descripcion, double precio,
-        int stock, String imagenUrl, int oferta, Categoria categoria) {
+        int stock, String imagenUrl, int oferta, long id_categoria) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -24,7 +25,7 @@ public class Producto {
         setStock(stock);
         this.imagenUrl = imagenUrl;
         setOferta(oferta);
-        this.categoria = categoria;
+        this.id_categoria = id_categoria;
     }
 
     public Long getId() {
@@ -93,12 +94,20 @@ public class Producto {
         this.activo = activo;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public String getNombreCategoria() {
+        return nombreCategoria;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
+    }
+
+    public Long getIdCategoria() {
+        return id_categoria;
+    }
+
+    public void setIdCategoria(Long id_categoria) {
+        this.id_categoria = id_categoria;
     }
 
     public double getPrecioFinal() {

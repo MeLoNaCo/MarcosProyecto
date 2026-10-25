@@ -15,8 +15,6 @@ public class CategoryAdapter {
         return categoriaEntity;
     }
 
-
-
     public Categoria toModel(CategoriaEntity categoriaEntity) {
         if (categoriaEntity == null) {
             return null;

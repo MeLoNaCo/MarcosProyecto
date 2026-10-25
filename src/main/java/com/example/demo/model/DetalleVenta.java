@@ -1,29 +1,62 @@
 package com.example.demo.model;
 
 public class DetalleVenta {
+
+    private Long id;
     private Producto producto;
     private int cantidad;
+    private double precioUnitario;
 
     public DetalleVenta() {
     }
 
-    public DetalleVenta(Producto producto, int cantidad) {
+    public DetalleVenta(Long id, Producto producto, int cantidad, double precioUnitario) {
+        this.id = id;
         this.producto = producto;
-        setCantidad(cantidad);
+        this.cantidad = cantidad;
+        this.precioUnitario = precioUnitario;
     }
 
-    public Producto getProducto() { return producto; }
-    public void setProducto(Producto producto) { this.producto = producto; }
+    // Constructor de conveniencia: congela el precio actual del producto
+    public DetalleVenta(Producto producto, int cantidad) {
+        this.producto = producto;
+        this.cantidad = cantidad;
+        this.precioUnitario = producto.getPrecioFinal();
+    }
 
-    public int getCantidad() { return cantidad; }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
     public void setCantidad(int cantidad) {
-        this.cantidad = Math.max(1, cantidad);
+        this.cantidad = cantidad;
+    }
+
+    public double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(double precioUnitario) {
+        this.precioUnitario = precioUnitario;
     }
 
     public double getSubtotal() {
-        if (producto == null) {
-            return 0;
-        }
-        return producto.getPrecioFinal() * cantidad;
+        return precioUnitario * cantidad;
     }
 }

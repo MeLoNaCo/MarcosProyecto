@@ -4,10 +4,12 @@ public class Categoria {
 
     private Long id;
     private String nombre;
+    private boolean activo = true;
 
-    public Categoria(Long id, String nombre) {
+    public Categoria(Long id, String nombre, boolean activo) {
         this.id = id;
         this.nombre = nombre;
+        this.activo = activo;
     }
 
     public Categoria() {
@@ -27,5 +29,13 @@ public class Categoria {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }

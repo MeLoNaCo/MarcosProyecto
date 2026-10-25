@@ -17,7 +17,7 @@ public class TaskAdapter {
         Task task = new Task();
         task.setTitulo(entity. getTitulo());
         task.setFechaCreacion(entity.getFechaCreacion());
-        task.setId_categoria(entity.getCategoria().getId()  );
+        task.setId_categoria(entity.getCategoria().getId());
         return task;
     }
 

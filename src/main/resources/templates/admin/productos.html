@@ -7,73 +7,93 @@
     <title>Hero Games - Productos</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 
 <body>
 
-    <!-- Barra superior (solo móvil) -->
-    <nav class="navbar bg-body-tertiary border-bottom d-md-none">
-        <div class="container-fluid">
-            <span class="navbar-brand fst-italic text-info mb-0">Hero Games</span>
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"
-                aria-controls="sidebarMenu" aria-label="Abrir menú">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </nav>
-
+<!-- Barra superior (solo móvil) -->
+<nav class="navbar bg-body-tertiary border-bottom d-md-none">
     <div class="container-fluid">
-        <div class="row min-vh-100">
+        <span class="navbar-brand fst-italic text-info mb-0">Hero Games</span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"
+                aria-controls="sidebarMenu" aria-label="Abrir menú">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
 
-            <aside th:replace="~{fragments/admin-sidebar :: admin-sidebar('productos')}">>
-            </aside>
+<div class="container-fluid">
+    <div class="row min-vh-100">
 
-            <!-- Contenido -->
-            <main class="col-md-9 col-xl-10 p-3 p-md-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="mb-0 fs-3">Productos</h2>
-                    <a th:href="@{/admin/productos/nuevo}" class="btn btn-primary">Agregar Producto</a>
+        <aside th:replace="~{fragments/admin-sidebar :: admin-sidebar('productos')}">
+        </aside>
+
+        <!-- Contenido -->
+        <main class="col-md-9 col-xl-10 p-3 p-md-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0 fs-3">Productos</h2>
+                <a th:href="@{/admin/productos/nuevo}" class="btn btn-primary">Agregar Producto</a>
+            </div>
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                        <tr><th>Código</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Estado</th>
+                            <th>Acciones</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="p : ${productos}">
+                            <td th:text="${p.id}">id</td>
+                            <td th:text="${p.nombre}">Nombre</td>
+                            <td th:text="${p.nombreCategoria}">Cat</td>
+                            <td><span class="text-success fw-bold" th:text="'S/ ' + ${#numbers.formatDecimal(p.precioFinal, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span></td>
+                            <td th:text="${p.stock}">0</td>
+                            <td><span th:if="${p.stock > 0}" class="badge text-bg-success">Disponible</span>
+                                <span th:unless="${p.stock > 0}" class="badge text-bg-danger">Agotado</span></td>
+                            <td>
+                                <div class="d-flex gap-1 align-items-center">
+                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" th:data-bs-target="'#modalProd' + ${p.id}">Ver</button>
+                                    <a th:href="@{/admin/productos/editar/{id}(id=${p.id})}" class="btn btn-sm btn-outline-info">Editar</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(productos)}"><td colspan="7" class="text-center text-secondary">Sin productos registrados.</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="card">
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
-                            <thead>
-                                <tr><th>Código</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Estado</th><th class="text-end">Acciones</th></tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="p : ${productos}"><td th:text="'#P' + ${#numbers.formatInteger(p.id, 3)}">#P001</td><td th:text="${p.nombre}">Nombre</td><td th:text="${p.categoria.nombre}">Cat</td><td><span class="text-success fw-bold" th:text="'S/ ' + ${#numbers.formatDecimal(p.precioFinal, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span></td><td th:text="${p.stock}">0</td><td><span th:if="${p.stock > 0}" class="badge text-bg-success">Disponible</span><span th:unless="${p.stock > 0}" class="badge text-bg-danger">Agotado</span></td><td class="text-end"><button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" th:data-bs-target="'#modalProd' + ${p.id}">Ver</button> <a th:href="@{/admin/productos/editar/{id}(id=${p.id})}" class="btn btn-sm btn-outline-info">Editar</a> <form th:action="@{/admin/productos/eliminar}" method="post" class="d-inline"><input type="hidden" name="id" th:value="${p.id}"><button class="btn btn-sm btn-outline-danger">Eliminar</button></form></td></tr>
-                            <tr th:if="${#lists.isEmpty(productos)}"><td colspan="7" class="text-center text-secondary">Sin productos registrados.</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div th:each="p : ${productos}" class="modal fade" th:id="'modalProd' + ${p.id}" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" th:text="${p.nombre}">Producto</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p class="text-secondary" th:text="${p.descripcion}">Desc</p>
-                                <p class="mb-1" th:text="'Categoría: ' + ${p.categoria.nombre}">Cat</p>
-                                <p class="mb-1" th:text="'Precio: S/ ' + ${#numbers.formatDecimal(p.precioFinal, 1, 'COMMA', 2, 'POINT')}">Precio</p>
-                                <p class="mb-0" th:text="'Stock: ' + ${p.stock}">Stock</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            </div>
+            </div>
+            <div th:each="p : ${productos}" class="modal fade" th:id="'modalProd' + ${p.id}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" th:text="${p.nombre}">Producto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-secondary" th:text="${p.descripcion}">Desc</p>
+                            <p class="mb-1" th:text="'Categoría: ' + ${p.nombreCategoria}">Cat</p>
+                            <p class="mb-1" th:text="'Precio: S/ ' + ${#numbers.formatDecimal(p.precioFinal, 1, 'COMMA', 2, 'POINT')}">Precio</p>
+                            <p class="mb-0" th:text="'Stock: ' + ${p.stock}">Stock</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
+        </main>
 
-        </div>
     </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
 </body>

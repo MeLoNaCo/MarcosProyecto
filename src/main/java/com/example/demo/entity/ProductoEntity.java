@@ -106,4 +106,8 @@ public class ProductoEntity {
     public void setCategoria(CategoriaEntity categoria) {
         this.categoria = categoria;
     }
+
+    public double getPrecioFinal() {
+        return precio * (1.0 - (double) oferta / 100.0);
+    }
 }
