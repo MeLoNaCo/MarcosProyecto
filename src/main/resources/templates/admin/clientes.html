@@ -7,60 +7,68 @@
     <title>Hero Games - Clientes</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 
 <body>
 
-    <!-- Barra superior (solo móvil) -->
-    <nav class="navbar bg-body-tertiary border-bottom d-md-none">
-        <div class="container-fluid">
-            <span class="navbar-brand fst-italic text-info mb-0">Hero Games</span>
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"
-                aria-controls="sidebarMenu" aria-label="Abrir menú">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </nav>
-
+<!-- Barra superior (solo móvil) -->
+<nav class="navbar bg-body-tertiary border-bottom d-md-none">
     <div class="container-fluid">
-        <div class="row min-vh-100">
-
-            <aside th:replace="~{fragments/admin-sidebar :: admin-sidebar('clientes')}">>
-            </aside>
-
-            <!-- Contenido -->
-            <main class="col-md-9 col-xl-10 p-3 p-md-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="mb-0 fs-3">Clientes</h2>
-                    <a th:href="@{/admin/clientes/nuevo}" class="btn btn-primary">Agregar Cliente</a>
-                </div>
-                <div class="card">
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
-                            <thead>
-                                <tr><th>#</th><th>Nombres</th><th>Apellidos</th><th>Correo</th><th>Teléfono</th><th>Estado</th></tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="usuario, iterStat : ${usuarios}">
-                                <td th:text="${iterStat.count}">1</td>
-                                <td th:text="${usuario.nombre}">Nombres</td>
-                                <td th:text="${usuario.apellidos}">Apellidos</td>
-                                <td th:text="${usuario.email}">Email</td>
-                                <td th:text="${usuario.telefono}">Teléfono</td>
-                                <td th:text="${usuario.activo}">Estado</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </main>
-
-        </div>
+        <span class="navbar-brand fst-italic text-info mb-0">Hero Games</span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"
+                aria-controls="sidebarMenu" aria-label="Abrir menú">
+            <span class="navbar-toggler-icon"></span>
+        </button>
     </div>
+</nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+<div class="container-fluid">
+    <div class="row min-vh-100">
+
+        <aside th:replace="~{fragments/admin-sidebar :: admin-sidebar('clientes')}">
+        </aside>
+
+        <!-- Contenido -->
+        <main class="col-md-9 col-xl-10 p-3 p-md-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0 fs-3">Clientes</h2>
+                <a th:href="@{/admin/clientes/nuevo}" class="btn btn-primary">Agregar Cliente</a>
+            </div>
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                        <tr><th>#</th><th>Nombres</th><th>Correo</th><th>Teléfono</th><th>Estado</th><th>Acciones</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="usuario, iterStat : ${usuarios}">
+                            <td th:text="${iterStat.count}">1</td>
+                            <td th:text="${usuario.nombre}">Nombres</td>
+                            <td th:text="${usuario.email}">Email</td>
+                            <td th:text="${usuario.telefono}">Teléfono</td>
+                            <td th:text="${usuario.activo}">Estado</td>
+                            <td>
+                                <div class="d-flex gap-1 align-items-center">
+                                    <!-- Botón Ver (Opcional si usas modal, o puedes apuntar a una ruta de detalle) -->
+                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" th:data-bs-target="'#modalCliente' + ${usuario.id}">Ver</button>
+
+                                    <!-- Botón Editar -->
+                                    <a th:href="@{/admin/clientes/editar/{id}(id=${usuario.id})}" class="btn btn-sm btn-outline-info">Editar</a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
 </body>

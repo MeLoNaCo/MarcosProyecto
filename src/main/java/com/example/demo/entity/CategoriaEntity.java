@@ -10,13 +10,15 @@ public class CategoriaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
+    private boolean activo;
 
     @OneToMany(mappedBy = "categoria")
-    private List<TaskEntity> tasks;
+    private List<ProductoEntity> productos;
 
-    public CategoriaEntity(Long id, String nombre) {
+    public CategoriaEntity(Long id, String nombre, boolean activo) {
         this.id = id;
         this.nombre = nombre;
+        this.activo = activo;
     }
 
     public CategoriaEntity() {
@@ -36,5 +38,21 @@ public class CategoriaEntity {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    public List<ProductoEntity> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<ProductoEntity> productos) {
+        this.productos = productos;
     }
 }

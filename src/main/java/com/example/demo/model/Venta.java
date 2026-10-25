@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,7 @@ public class Venta {
 
     private Long id;
     private LocalDateTime fecha;
-    private Usuario usuario;
+    private Long idUsuario;
     private String nombreComprador;
     private String direccion;
     private List<DetalleVenta> detalles = new ArrayList<>();
@@ -24,10 +25,17 @@ public class Venta {
     public LocalDateTime getFecha() { return fecha; }
     public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
 
-    public Usuario getUsuario() { return usuario; }
-    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
 
-    public String getNombreComprador() { return nombreComprador; }
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getNombreComprador() {
+        return nombreComprador;
+    }
     public void setNombreComprador(String nombreComprador) { this.nombreComprador = nombreComprador; }
 
     public String getDireccion() { return direccion; }
@@ -36,9 +44,16 @@ public class Venta {
     public List<DetalleVenta> getDetalles() { return detalles; }
     public void setDetalles(List<DetalleVenta> detalles) { this.detalles = detalles; }
 
-    public double getTotal() { return total; }
     public void setTotal(double total) { this.total = total; }
 
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
+
+    public Double getTotal() {
+        total = detalles.stream()
+                .mapToDouble(DetalleVenta::getSubtotal)
+                .sum();
+
+        return total;
+    }
 }

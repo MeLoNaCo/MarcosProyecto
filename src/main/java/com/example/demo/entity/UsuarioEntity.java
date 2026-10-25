@@ -2,6 +2,8 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity(name = "usuario")
 public class UsuarioEntity {
     @Id
@@ -21,11 +23,10 @@ public class UsuarioEntity {
     private String rol = "CLIENTE"; // ADMIN o CLIENTE
     private boolean activo = true;
 
+    @OneToMany(mappedBy = "usuario")
+    private List<VentaEntity> ventas;
 
-    public UsuarioEntity() {
-    }
-
-    public UsuarioEntity(Long id, String nombre, String email, String password, String telefono, String rol, boolean activo) {
+    public UsuarioEntity(Long id, String nombre, String email, String password, String telefono, String rol, boolean activo, List<VentaEntity> ventas) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
@@ -33,6 +34,10 @@ public class UsuarioEntity {
         this.telefono = telefono;
         this.rol = rol;
         this.activo = activo;
+        this.ventas = ventas;
+    }
+
+    public UsuarioEntity() {
     }
 
     public Long getId() {
@@ -89,5 +94,13 @@ public class UsuarioEntity {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    public List<VentaEntity> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<VentaEntity> ventas) {
+        this.ventas = ventas;
     }
 }
