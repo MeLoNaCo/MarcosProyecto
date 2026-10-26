@@ -2,6 +2,7 @@ package com.example.demo.adapter;
 
 
 import com.example.demo.entity.DetalleVentaEntity;
+import com.example.demo.entity.UsuarioEntity;
 import com.example.demo.entity.VentaEntity;
 import com.example.demo.model.Venta;
 import org.springframework.stereotype.Component;
@@ -35,6 +36,7 @@ public class VentaAdapter {
                         .map(detalleAdapter::toModel)
                         .collect(Collectors.toList())
         );
+        venta.setIdUsuario(entity.getUsuario() != null ? entity.getUsuario().getId() : null);
         // El total no se setea: Venta lo calcula desde sus detalles
         return venta;
     }
@@ -57,6 +59,10 @@ public class VentaAdapter {
                 .collect(Collectors.toList());
         detalles.forEach(d -> d.setVenta(entity));
         entity.setDetalles(detalles);
+
+        UsuarioEntity usuario = new UsuarioEntity();
+        usuario.setId(model.getIdUsuario());
+        entity.setUsuario(usuario);
 
         // El usuario (UsuarioEntity) lo asigna el service con el repository
         return entity;

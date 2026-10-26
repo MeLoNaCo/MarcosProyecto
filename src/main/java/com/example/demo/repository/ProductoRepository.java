@@ -13,4 +13,7 @@ public interface ProductoRepository extends JpaRepository<ProductoEntity,Long> {
     List<ProductoEntity> findByActivoTrue();
     List<ProductoEntity> findByCategoriaIdAndActivoTrue(Long idCategoria);
     List<ProductoEntity> findByCategoriaNombreAndActivoTrue(String nombreCategoria);
+    List<ProductoEntity> findByActivoTrueAndStockGreaterThan(int stock);
+
+    List<ProductoEntity> findByCategoriaNombreAndActivoTrueAndStockGreaterThan(String nombre, int stock);
 }

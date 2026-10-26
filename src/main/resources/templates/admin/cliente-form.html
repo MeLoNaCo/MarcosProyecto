@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -7,73 +7,79 @@
     <title>Hero Games - Cliente</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 
 <body>
 
-    <nav class="navbar bg-body-tertiary border-bottom d-md-none">
-        <div class="container-fluid">
-            <span class="navbar-brand fst-italic text-info mb-0">Hero Games</span>
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"
-                aria-controls="sidebarMenu" aria-label="Abrir menú">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </nav>
-
+<nav class="navbar bg-body-tertiary border-bottom d-md-none">
     <div class="container-fluid">
-        <div class="row min-vh-100">
-
-            <aside th:replace="~{fragments/admin-sidebar :: admin-sidebar('clientes')}">>
-            </aside>
-
-            <main class="col-md-9 col-xl-10 p-3 p-md-4">
-                <h2 class="mb-4 fs-3">Nuevo Cliente</h2>
-
-                <div th:if="${error}" class="alert alert-danger" th:text="${error}">Error</div>
-
-                <div class="card" style="max-width: 720px;">
-                    <div class="card-body">
-                        <form th:action="@{/admin/clientes/guardar}" method="post">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Nombre</label>
-                                    <input type="text" name="nombre" required class="form-control">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Apellidos</label>
-                                    <input type="text" name="apellidos" required class="form-control">
-                                </div>
-                            </div>
-                            <div class="row g-3 mt-1">
-                                <div class="col-md-6">
-                                    <label class="form-label">Correo</label>
-                                    <input type="email" name="email" required class="form-control">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Teléfono</label>
-                                    <input type="tel" name="telefono" class="form-control" pattern="\+?[0-9 ]{7,15}">
-                                </div>
-                            </div>
-                            <div class="mb-3 mt-3">
-                                <label class="form-label">Contraseña</label>
-                                <input type="password" name="password" required class="form-control">
-                            </div>
-                            <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
-                                <a th:href="@{/admin/clientes}" class="btn btn-outline-secondary">Cancelar</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </main>
-
-        </div>
+        <span class="navbar-brand fst-italic text-info mb-0">Hero Games</span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"
+                aria-controls="sidebarMenu" aria-label="Abrir menú">
+            <span class="navbar-toggler-icon"></span>
+        </button>
     </div>
+</nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+<div class="container-fluid">
+    <div class="row min-vh-100">
+
+        <aside th:replace="~{fragments/admin-sidebar :: admin-sidebar('clientes')}">
+        </aside>
+
+        <main class="col-md-9 col-xl-10 p-3 p-md-4">
+            <h2 class="mb-4 fs-3" th:text="${usuario != null} ? 'Editar Cliente' : 'Nuevo Cliente'">Cliente</h2>
+
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}">Error</div>
+
+            <div class="card" style="max-width: 720px;">
+                <div class="card-body">
+                    <form th:action="${usuario != null} ? @{/admin/clientes/actualizar} : @{/admin/clientes/guardar}"
+                          method="post">
+
+                        <input type="hidden" name="id" th:if="${usuario != null}" th:value="${usuario.id}">
+
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" name="nombre" required class="form-control"
+                                   th:value="${usuario != null} ? ${usuario.nombre} : ${nombre}">
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Correo</label>
+                                <input type="email" name="email" required class="form-control"
+                                       th:value="${usuario != null} ? ${usuario.email} : ${email}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Teléfono</label>
+                                <input type="tel" name="telefono" class="form-control" pattern="\+?[0-9 ]{7,15}"
+                                       title="Solo números, + inicial opcional, entre 7 y 15 dígitos"
+                                       th:value="${usuario != null} ? ${usuario.telefono} : ${telefono}">
+                            </div>
+                        </div>
+
+                        <!-- La contraseña solo se pide al crear -->
+                        <div class="mb-3 mt-3" th:if="${usuario == null}">
+                            <label class="form-label">Contraseña</label>
+                            <input type="password" name="password" required minlength="6" class="form-control">
+                        </div>
+
+                        <div class="d-flex gap-2 mt-3">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <a th:href="@{/admin/clientes}" class="btn btn-outline-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
 </body>

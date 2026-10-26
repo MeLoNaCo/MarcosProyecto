@@ -29,13 +29,15 @@
         <main class="col-md-9 col-xl-10 p-3 p-md-4">
             <h2 class="mb-4 fs-3">Reportes Generales</h2>
 
+            <!-- Tarjetas resumen -->
             <div class="row g-3 mb-4">
                 <div class="col-6 col-xl-3">
                     <div class="card h-100">
                         <div class="card-body d-flex align-items-center gap-3">
                             <i class="bi bi-cash-coin fs-3 p-3 rounded-circle bg-info bg-opacity-25 text-info"></i>
                             <div>
-                                <h3 class="mb-0 fs-4" th:text="'S/ ' + ${totalVentasG}">S/ 0</h3>
+                                <h3 class="mb-0 fs-4"
+                                    th:text="'S/ ' + ${#numbers.formatDecimal(totalVentasG, 1, 'COMMA', 2, 'POINT')}">S/ 0</h3>
                                 <small class="text-secondary d-block">Ventas (Este mes)</small>
                             </div>
                         </div>
@@ -57,8 +59,8 @@
                         <div class="card-body d-flex align-items-center gap-3">
                             <i class="bi bi-person-plus fs-3 p-3 rounded-circle bg-info bg-opacity-25 text-info"></i>
                             <div>
-                                <h3 class="mb-0 fs-4">25</h3>
-                                <small class="text-secondary d-block">Usuarios (Este mes)</small>
+                                <h3 class="mb-0 fs-4" th:text="${totalClientes}">0</h3>
+                                <small class="text-secondary d-block">Usuarios registrados</small>
                             </div>
                         </div>
                     </div>
@@ -68,7 +70,8 @@
                         <div class="card-body d-flex align-items-center gap-3">
                             <i class="bi bi-tag fs-3 p-3 rounded-circle bg-info bg-opacity-25 text-info"></i>
                             <div>
-                                <h3 class="mb-0 fs-4" th:text="'S/ ' + ${ticketPromedioG}">S/ 0</h3>
+                                <h3 class="mb-0 fs-4"
+                                    th:text="'S/ ' + ${#numbers.formatDecimal(ticketPromedioG, 1, 'COMMA', 2, 'POINT')}">S/ 0</h3>
                                 <small class="text-secondary d-block">Ticket promedio</small>
                             </div>
                         </div>
@@ -76,6 +79,7 @@
                 </div>
             </div>
 
+            <!-- Gráficos -->
             <div class="row g-3 mb-4">
                 <div class="col-12 col-md-6">
                     <div class="card h-100">
@@ -96,7 +100,7 @@
                 <div class="col-12 col-md-4">
                     <div class="card h-100">
                         <div class="card-body">
-                            <h5 class="card-title">3. Usuarios Registrados</h5>
+                            <h5 class="card-title">3. Compradores por Mes</h5>
                             <canvas id="grafico3"></canvas>
                         </div>
                     </div>
@@ -119,6 +123,7 @@
                 </div>
             </div>
 
+            <!-- Ventas por categoría -->
             <div class="card mb-4">
                 <div class="card-body">
                     <h5 class="card-title mb-3">Ventas por Categoría</h5>
@@ -128,30 +133,34 @@
                             <tr><th>Categoría</th><th>Unidades Vendidas</th><th>Ingresos</th></tr>
                             </thead>
                             <tbody>
-                            <tr><td>Componentes</td><td>140</td><td class="text-success fw-bold">S/ 7,820.00</td></tr>
-                            <tr><td>Periféricos</td><td>95</td><td class="text-success fw-bold">S/ 3,410.00</td></tr>
-                            <tr><td>Accesorios</td><td>60</td><td class="text-success fw-bold">S/ 1,110.00</td></tr>
+                            <tr th:each="c : ${categorias}">
+                                <td th:text="${c.nombre}">Categoría</td>
+                                <td th:text="${c.unidades}">0</td>
+                                <td class="text-success fw-bold"
+                                    th:text="'S/ ' + ${#numbers.formatDecimal(c.ingresos, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(categorias)}">
+                                <td colspan="3" class="text-center text-secondary">Aún no hay ventas.</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
+            <!-- Productos más vendidos -->
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-3">Productos Más Vendidos</h5>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Memoria RAM 16GB DDR4
-                            <span class="badge text-bg-warning rounded-pill">58 unidades</span>
+                        <li th:each="p : ${topProductos}"
+                            class="list-group-item d-flex justify-content-between align-items-center">
+                            <span th:text="${p.nombre}">Producto</span>
+                            <span class="badge text-bg-warning rounded-pill"
+                                  th:text="${p.unidades} + ' unidades'">0 unidades</span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Mouse Gamer RGB
-                            <span class="badge text-bg-warning rounded-pill">44 unidades</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Teclado Mecánico 60%
-                            <span class="badge text-bg-warning rounded-pill">31 unidades</span>
+                        <li th:if="${#lists.isEmpty(topProductos)}" class="list-group-item text-secondary">
+                            Aún no hay ventas.
                         </li>
                     </ul>
                 </div>
@@ -179,7 +188,7 @@
 
     new Chart(document.getElementById('grafico3'), {
         type: 'line',
-        data: { labels: meses, datasets: [{ label: 'Nuevos Usuarios', data: [[${clientes}]] }] }
+        data: { labels: meses, datasets: [{ label: 'Compradores', data: [[${clientes}]] }] }
     });
 
     new Chart(document.getElementById('grafico4'), {
