@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface VentaRepository extends JpaRepository<VentaEntity, Long> {
+    List<VentaEntity> findByUsuarioIdOrderByFechaDesc(Long idUsuario);
 
     @Query("SELECT COALESCE(SUM(v.total), 0) FROM venta v")
     double sumarTotalVentas();

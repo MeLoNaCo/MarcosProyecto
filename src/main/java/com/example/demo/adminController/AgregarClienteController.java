@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AgregarClienteController {
 
     private final UsuarioService usuarioService;
-    private final UsuarioRepository usuarioRepository;
 
-    public AgregarClienteController(UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
+    public AgregarClienteController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
-        this.usuarioRepository = usuarioRepository;
     }
 
     @GetMapping("/admin/clientes/nuevo")
@@ -30,6 +28,14 @@ public class AgregarClienteController {
                           @RequestParam String password,
                           @RequestParam(required = false) String telefono,
                           Model model) {
+        String error = usuarioService.registrar(nombre, email, password, password, telefono);
+        if (error != null) {
+            model.addAttribute("error", error);
+            model.addAttribute("nombre", nombre);
+            model.addAttribute("email", email);
+            model.addAttribute("telefono", telefono);
+            return "admin/cliente-form";
+        }
         return "redirect:/admin/clientes";
     }
 }

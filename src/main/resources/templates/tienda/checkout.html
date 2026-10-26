@@ -26,10 +26,10 @@
                 <div class="card border-secondary shadow p-4 mb-4">
                     <h4 class="text-light mb-3">1. Datos de Envío</h4>
                     <div class="mb-3">
-                        <label class="form-label text-secondary">Nombre y Apellido</label>
+                        <label class="form-label text-secondary">Nombre del comprador</label>
                         <input type="text" name="nombre" required
-                            th:value="${session.usuario != null} ? ${session.usuario.nombre} + ' ' + ${session.usuario.apellidos} : ''"
-                            class="form-control bg-dark text-white border-secondary" placeholder="Ej. Joel Vivanco">
+                               th:value="${session.usuario != null} ? ${session.usuario.nombre} : ''"
+                               class="form-control bg-dark text-white border-secondary" placeholder="Ej. Joel Vivanco">
                     </div>
                     <div class="mb-3">
                         <label class="form-label text-secondary">Dirección de Entrega</label>
@@ -67,9 +67,10 @@
                         <span>IGV (18%)</span>
                         <span th:text="'S/ ' + ${#numbers.formatDecimal(total * 0.18, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
                     </div>
+                    <hr class="border-secondary">
                     <div class="d-flex justify-content-between text-light fw-bold fs-5 mb-4">
                         <span>Total a Pagar</span>
-                        <span class="text-info" th:text="'S/ ' + ${#numbers.formatDecimal(total * 1.18, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
+                        <span class="text-info" th:text="'S/ ' + ${#numbers.formatDecimal(total, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
                     </div>
                     <button type="submit" class="btn btn-success w-100 py-2 fw-bold">Confirmar y Pagar</button>
                 </div>

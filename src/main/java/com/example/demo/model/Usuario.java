@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import com.example.demo.entity.VentaEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Usuario {
@@ -14,20 +15,17 @@ public class Usuario {
     private String rol = "CLIENTE"; // ADMIN o CLIENTE
     private boolean activo = true;
 
-    private List<VentaEntity> ventas;
-
     public Usuario() {
     }
 
     public Usuario(Long id, String nombre, String email,
-                   String password, String telefono, String rol, List ventas) {
+                   String password, String telefono, String rol) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
         this.password = password;
         this.telefono = telefono;
         this.rol = rol;
-        this.ventas = ventas;
     }
 
     public Long getId() {
@@ -78,19 +76,11 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public boolean isActivo() {
-        return activo;
-    }
-
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
 
-    public List<VentaEntity> getVentas() {
-        return ventas;
-    }
-
-    public void setVentas(List<VentaEntity> ventas) {
-        this.ventas = ventas;
+    public boolean isActivo() {
+        return activo;
     }
 }

@@ -14,17 +14,18 @@ public class VentaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="fecha")
     private LocalDateTime fecha;
 
-    @ManyToOne
-    @JoinColumn(name="usuario")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "usuario", nullable = false)
     private UsuarioEntity usuario;
 
     private String nombreComprador;
     private String direccion;
 
-    @OneToMany(mappedBy = "venta")
-    private List<DetalleVentaEntity> detalles;
+    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetalleVentaEntity> detalles = new ArrayList<>();
 
     private double total;
     private String estado = "PAGADO";

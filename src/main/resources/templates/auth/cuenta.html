@@ -51,7 +51,7 @@
                             <i class="bi bi-shield-lock me-2"></i>Seguridad
                         </button>
                     </div>
-                    <a th:if="${session.usuario != null and session.usuario.rol == 'ADMIN'}" th:href="@{/dashboard}"
+                    <a th:if="${session.usuario != null and session.usuario.rol == 'ADMIN'}" th:href="@{/admin}"
                         class="btn btn-outline-warning w-100 mt-2">
                         <i class="bi bi-speedometer2 me-2"></i>Admin
                     </a>
@@ -72,17 +72,10 @@
                                         <label class="form-label">Avatar</label>
                                         <input type="file" class="form-control" accept="image/*">
                                     </div>
-                                    <div class="row g-3">
-                                        <div class="col-md-6">
-                                            <label class="form-label">Nombre</label>
-                                            <input type="text" name="nombre" required class="form-control"
-                                                th:value="${session.usuario.nombre}" placeholder="Tu nombre">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">Apellidos</label>
-                                            <input type="text" name="apellidos" required class="form-control"
-                                                th:value="${session.usuario.apellidos}" placeholder="Tus apellidos">
-                                        </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Nombre</label>
+                                        <input type="text" name="nombre" required class="form-control"
+                                               th:value="${session.usuario.nombre}" placeholder="Tu nombre">
                                     </div>
                                     <div class="row g-3 mt-1">
                                         <div class="col-md-6">

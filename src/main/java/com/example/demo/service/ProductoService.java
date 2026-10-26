@@ -35,23 +35,20 @@ public class ProductoService {
                 .collect(Collectors.toList());
     }
 
-    public List<Producto> listarProductosActivos(){
-        List<ProductoEntity> productos = productoRepository.findByActivoTrue();
-
-        return productos.stream()
-                .map(e -> productoAdapter.toModel(e))
+    @Transactional(readOnly = true)
+    public List<Producto> listarProductosActivos() {
+        return productoRepository.findByActivoTrueAndStockGreaterThan(0).stream()
+                .map(productoAdapter::toModel)
                 .collect(Collectors.toList());
     }
 
-    public List<Producto> listarPorCategoria(String nombreCategoria){
+    @Transactional(readOnly = true)
+    public List<Producto> listarPorCategoria(String nombreCategoria) {
         if (!categoriaRepository.existsByNombre(nombreCategoria)) {
             throw new RuntimeException("Categoría no encontrada con nombre: " + nombreCategoria);
         }
-
-        // 2. Buscar los productos por el nombre de la categoría y mapearlos al modelo
-        List<ProductoEntity> productosPorCategoria = productoRepository.findByCategoriaNombreAndActivoTrue(nombreCategoria);
-
-        return productosPorCategoria.stream()
+        return productoRepository
+                .findByCategoriaNombreAndActivoTrueAndStockGreaterThan(nombreCategoria, 0).stream()
                 .map(productoAdapter::toModel)
                 .collect(Collectors.toList());
     }

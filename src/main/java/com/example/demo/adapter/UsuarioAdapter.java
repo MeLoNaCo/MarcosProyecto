@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UsuarioAdapter {
 
-    public Usuario toModel(UsuarioEntity entity){
+    public Usuario toModel(UsuarioEntity entity) {
         if (entity == null) {
             return null;
         }
@@ -16,16 +16,15 @@ public class UsuarioAdapter {
         usuario.setId(entity.getId());
         usuario.setNombre(entity.getNombre());
         usuario.setEmail(entity.getEmail());
-        usuario.setPassword(entity.getEmail());
+        usuario.setPassword(entity.getPassword());
         usuario.setTelefono(entity.getTelefono());
         usuario.setRol(entity.getRol());
         usuario.setActivo(entity.isActivo());
-        usuario.setVentas(entity.getVentas());
 
         return usuario;
     }
 
-    public UsuarioEntity toEntity(Usuario model){
+    public UsuarioEntity toEntity(Usuario model) {
         if (model == null) {
             return null;
         }
@@ -34,11 +33,10 @@ public class UsuarioAdapter {
         entity.setId(model.getId());
         entity.setNombre(model.getNombre());
         entity.setEmail(model.getEmail());
-        entity.setPassword(model.getEmail());
+        entity.setPassword(model.getPassword());
         entity.setTelefono(model.getTelefono());
         entity.setRol(model.getRol());
         entity.setActivo(model.isActivo());
-        entity.setVentas(model.getVentas());
 
         return entity;
     }
