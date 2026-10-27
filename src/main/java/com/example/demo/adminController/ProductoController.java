@@ -33,7 +33,7 @@ public class ProductoController {
             return "redirect:/admin/productos";
         }
         model.addAttribute("producto", p);
-        model.addAttribute("categorias", categoriaService.listarCategorias());
+        model.addAttribute("categorias", categoriaService.listarCategoriasActivas());
         return "admin/producto-form";
     }
 }

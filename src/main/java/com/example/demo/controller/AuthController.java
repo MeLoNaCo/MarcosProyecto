@@ -52,7 +52,7 @@ public class AuthController {
                              @RequestParam String confirm,
                              HttpSession session,
                              Model model) {
-        String error = usuarioService.registrar(nombre, email, password, confirm, null );
+        String error = usuarioService.registrar(nombre, email, password, confirm);
         if (error != null) {
             model.addAttribute("error", error);
             return "auth/registro";
@@ -82,13 +82,12 @@ public class AuthController {
         if (!(obj instanceof Usuario usuario)) {
             return "redirect:/login";
         }
-        String error = usuarioService.actualizar(usuario.getId(), nombre, email, telefono);
+        String error = usuarioService.actualizar(usuario.getId(), nombre, email, telefono, usuario.isActivo());
         if (error != null) {
             model.addAttribute("errorPerfil", error);
             model.addAttribute("misPedidos", ventaService.listarPorUsuario(usuario.getId()));
             return "auth/cuenta";
         }
-        // Refresca la sesión: si no, seguiría mostrando los datos viejos
         session.setAttribute("usuario", usuarioService.buscarPorId(usuario.getId()));
         redirect.addFlashAttribute("okPerfil", "Cambios guardados");
         return "redirect:/cuenta";

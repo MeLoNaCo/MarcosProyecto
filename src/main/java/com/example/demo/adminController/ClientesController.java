@@ -39,8 +39,9 @@ public class ClientesController {
                              @RequestParam String nombre,
                              @RequestParam String email,
                              @RequestParam(required = false) String telefono,
+                             @RequestParam(defaultValue = "false") boolean activo,
                              Model model) {
-        String error = usuarioService.actualizar(id, nombre, email, telefono);
+        String error = usuarioService.actualizar(id, nombre, email, telefono, activo);
         if (error != null) {
             model.addAttribute("error", error);
             model.addAttribute("usuario", usuarioService.buscarPorId(id));
