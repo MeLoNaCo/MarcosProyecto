@@ -72,8 +72,17 @@ public class CarritoController {
         if (carritoService.listar().isEmpty()) {
             return "redirect:/carrito";
         }
+        double subtotal = carritoService.total();
+        double igv = subtotal * 0.18;
+        double envio = (subtotal > 200.0) ? 0.0 : (subtotal * 0.10);
+        double totalPagar = subtotal + igv + envio;
+
         model.addAttribute("items", carritoService.listar());
-        model.addAttribute("total", carritoService.total());
+        model.addAttribute("total", subtotal);
+        model.addAttribute("igv", igv);
+        model.addAttribute("envio", envio);
+        model.addAttribute("totalPagar", totalPagar);
+
         return "tienda/checkout";
     }
 

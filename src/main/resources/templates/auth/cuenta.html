@@ -21,7 +21,7 @@
             <img th:src="@{/img/Herogameslogo.png}" src="../img/Herogameslogo.png"
                 class="rounded" width="72" height="72" alt="Avatar">
             <div>
-                <h1 class="h3 text-light mb-0">Mi cuenta</h1>
+                <h1 class="h3 text-dark mb-0">Mi cuenta</h1>
                 <p class="text-secondary mb-0">Gestiona tu perfil, pedidos y seguridad</p>
             </div>
         </div>
@@ -62,7 +62,7 @@
                 <div class="tab-content">
 
                     <div class="tab-pane fade show active" id="cta-perfil" role="tabpanel">
-                        <div class="card bg-dark text-light border-secondary">
+                        <div class="card bg-white text-dark border-secondary">
                             <div class="card-body">
                                 <h2 class="h5 text-info mb-3">Datos personales</h2>
                                 <div th:if="${errorPerfil}" class="alert alert-danger" th:text="${errorPerfil}">Error</div>
@@ -98,7 +98,7 @@
                     </div>
 
                     <div class="tab-pane fade" id="cta-direccion" role="tabpanel">
-                        <div class="card bg-dark text-light border-secondary">
+                        <div class="card bg-white text-dark border-secondary">
                             <div class="card-body">
                                 <h2 class="h5 text-info mb-3">Dirección y envío</h2>
                                 <form onsubmit="return false;">
@@ -150,11 +150,11 @@
                     </div>
 
                     <div class="tab-pane fade" id="cta-pedidos" role="tabpanel">
-                        <div class="card bg-dark text-light border-secondary">
+                        <div class="card bg-white text-dark border-secondary">
                             <div class="card-body">
                                 <h2 class="h5 text-info mb-3">Mis pedidos</h2>
                                 <div class="table-responsive">
-                                    <table class="table table-dark table-hover align-middle">
+                                    <table class="table table-hover align-middle">
                                         <thead>
                                             <tr>
                                                 <th>Pedido</th>
@@ -204,7 +204,7 @@
                                             th:text="${#temporals.format(v.fecha, 'dd/MM/yyyy HH:mm')}">fecha</p>
                                         <p class="text-secondary small mb-2"
                                             th:text="'Envío: ' + ${v.direccion}">Envío</p>
-                                        <table class="table table-dark table-sm align-middle">
+                                        <table class="table table-sm align-middle">
                                             <thead>
                                                 <tr>
                                                     <th>Producto</th>
@@ -236,7 +236,7 @@
                     </div>
 
                     <div class="tab-pane fade" id="cta-ajustes" role="tabpanel">
-                        <div class="card bg-dark text-light border-secondary">
+                        <div class="card bg-white text-dark border-secondary">
                             <div class="card-body">
                                 <h2 class="h5 text-info mb-3">Apariencia y notificaciones</h2>
                                 <div class="form-check form-switch mb-3">
@@ -257,7 +257,7 @@
                     </div>
 
                     <div class="tab-pane fade" id="cta-seguridad" role="tabpanel">
-                        <div class="card bg-dark text-light border-secondary">
+                        <div class="card bg-white text-dark border-secondary">
                             <div class="card-body">
                                 <h2 class="h5 text-info mb-3">Seguridad</h2>
                                 <form onsubmit="return false;">
