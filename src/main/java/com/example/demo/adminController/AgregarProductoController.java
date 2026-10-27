@@ -23,7 +23,7 @@ public class AgregarProductoController {
     @GetMapping("/admin/productos/nuevo")
     public String agregarProducto(Model model){
         model.addAttribute("producto", new Producto());
-        model.addAttribute("categorias", categoriaService.listarCategorias());
+        model.addAttribute("categorias", categoriaService.listarCategoriasActivas());
         return "admin/producto-form";
     }
 
@@ -33,7 +33,7 @@ public class AgregarProductoController {
         if (error != null) {
             model.addAttribute("error", error);
             model.addAttribute("producto", producto);
-            model.addAttribute("categorias", categoriaService.listarCategorias());
+            model.addAttribute("categorias", categoriaService.listarCategoriasActivas());
             return "admin/producto-form";
         }
         return "redirect:/admin/productos";

@@ -48,7 +48,8 @@ public class UsuarioService {
     }
 
     @Transactional
-    public String registrar(String nombre, String email, String password, String confirm, String telefono) {
+    public String registrar(String nombre, String email, String password, String confirm,
+                            String telefono, boolean activo) {
         if (nombre == null || nombre.isBlank()) {
             return "Completa tu nombre";
         }
@@ -70,13 +71,18 @@ public class UsuarioService {
         nuevo.setEmail(email);
         nuevo.setPassword(password);
         nuevo.setTelefono(telefono);
+        nuevo.setActivo(activo);
 
         usuarioRepository.save(usuarioAdapter.toEntity(nuevo));
         return null;
     }
 
+    public String registrar(String nombre, String email, String password, String confirm) {
+        return registrar(nombre, email, password, confirm, null, true);
+    }
+
     @Transactional
-    public String actualizar(Long id, String nombre, String email, String telefono) {
+    public String actualizar(Long id, String nombre, String email, String telefono, boolean activo) {
         if (nombre == null || nombre.isBlank()) {
             return "Completa tu nombre";
         }
@@ -97,6 +103,7 @@ public class UsuarioService {
         entity.setNombre(nombre);
         entity.setEmail(email);
         entity.setTelefono(telefono);
+        entity.setActivo(activo);
         usuarioRepository.save(entity);
         return null;
     }

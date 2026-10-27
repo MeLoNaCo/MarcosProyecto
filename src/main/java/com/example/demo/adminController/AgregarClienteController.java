@@ -27,8 +27,9 @@ public class AgregarClienteController {
                           @RequestParam String email,
                           @RequestParam String password,
                           @RequestParam(required = false) String telefono,
+                          @RequestParam(defaultValue = "false") boolean activo,
                           Model model) {
-        String error = usuarioService.registrar(nombre, email, password, password, telefono);
+        String error = usuarioService.registrar(nombre, email, password, password, telefono, activo);
         if (error != null) {
             model.addAttribute("error", error);
             model.addAttribute("nombre", nombre);
