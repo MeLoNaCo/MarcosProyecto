@@ -37,13 +37,13 @@
                     <div>
                         <label class="form-label fw-bold text-black mb-2">Categorías</label>
                         <div class="nav flex-column nav-pills gap-2">
-                            <a th:href="@{/catalogo}" class="nav-link text-start"
-                                th:classappend="${categoriaActiva == null} ? 'active'">
+                            <a th:href="@{/catalogo}" class="nav-link text-start text-dark"
+                               th:classappend="${categoriaActiva == null} ? 'active'">
                                 Todos los productos
                             </a>
                             <a th:each="c : ${categorias}" th:href="@{/catalogo(categoria=${c.nombre})}"
-                                th:text="${c.nombre}" class="nav-link text-start"
-                                th:classappend="${categoriaActiva == c.nombre} ? 'active'">
+                               th:text="${c.nombre}" class="nav-link text-start text-dark"
+                               th:classappend="${categoriaActiva == c.nombre} ? 'active'">
                                 Categoria
                             </a>
                         </div>
@@ -55,7 +55,7 @@
             <section class="col-lg-9">
                 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
                     <div class="col item-tarjeta" th:each="p : ${productos}">
-                        <div class="card card-producto h-100 bg-dark text-light border-secondary">
+                        <div class="card card-producto h-100 bg-white text-dark border">
                             <img th:src="${p.imagenUrl}"
                                 src="https://cdn.pixabay.com/photo/2015/03/21/19/27/pc-684125_1280.jpg"
                                 class="card-img-top card-img-producto" th:alt="${p.nombre}" alt="Producto">

@@ -24,20 +24,20 @@
             <div class="col-lg-8">
 
                 <div class="card border-secondary shadow p-4 mb-4">
-                    <h4 class="text-light mb-3">1. Datos de Envío</h4>
+                    <h4 class="text-dark mb-3">1. Datos de Envío</h4>
                     <div class="mb-3">
                         <label class="form-label text-secondary">Nombre del comprador</label>
                         <input type="text" name="nombre" required
                                th:value="${session.usuario != null} ? ${session.usuario.nombre} : ''"
-                               class="form-control bg-dark text-white border-secondary" placeholder="Ej. Joel Vivanco">
+                               class="form-control bg-white text-dark border-secondary" placeholder="Ej. Joel Vivanco">
                     </div>
                     <div class="mb-3">
                         <label class="form-label text-secondary">Dirección de Entrega</label>
                         <input type="text" name="direccion" required
-                            class="form-control bg-dark text-white border-secondary" placeholder="Av. Principal 123, Puente Piedra">
+                            class="form-control bg-white text-dark border-secondary" placeholder="Av. Principal 123, Puente Piedra">
                     </div>
 
-                    <h4 class="text-light mt-4 mb-3">2. Método de Pago</h4>
+                    <h4 class="text-dark mt-4 mb-3">2. Método de Pago</h4>
                     <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="metodoPago" id="tarjeta" checked>
                         <label class="form-check-label text-secondary" for="tarjeta">Tarjeta de Crédito o Débito</label>
@@ -61,16 +61,22 @@
                     <hr class="border-secondary">
                     <div class="d-flex justify-content-between text-secondary mb-2">
                         <span>Subtotal</span>
-                        <span th:text="'S/ ' + ${#numbers.formatDecimal(total, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
+                        <span th:text="'S/ ' + ${#numbers.formatDecimal(subtotal, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
                     </div>
                     <div class="d-flex justify-content-between text-secondary mb-2">
                         <span>IGV (18%)</span>
-                        <span th:text="'S/ ' + ${#numbers.formatDecimal(total * 0.18, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
+                        <span th:text="'S/ ' + ${#numbers.formatDecimal(igv, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
+                    </div>
+                    <div class="d-flex justify-content-between text-secondary mb-2">
+                        <span>Delivery</span>
+                        <span th:if="${envio == 0}" class="text-success fw-bold">Gratis</span>
+                        <span th:unless="${envio == 0}" th:text="'S/ ' + ${#numbers.formatDecimal(envio, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
                     </div>
                     <hr class="border-secondary">
-                    <div class="d-flex justify-content-between text-light fw-bold fs-5 mb-4">
+
+                    <div class="d-flex justify-content-between text-dark fw-bold fs-5 mb-4">
                         <span>Total a Pagar</span>
-                        <span class="text-info" th:text="'S/ ' + ${#numbers.formatDecimal(total, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
+                        <span class="text-info" th:text="'S/ ' + ${#numbers.formatDecimal(totalPagar, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
                     </div>
                     <button type="submit" class="btn btn-success w-100 py-2 fw-bold">Confirmar y Pagar</button>
                 </div>

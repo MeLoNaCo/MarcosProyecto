@@ -23,39 +23,39 @@
                     <i class="bi bi-check-circle-fill text-success display-1"></i>
                 </div>
 
-                <h1 class="text-light fw-bold mb-2">¡Pago Exitoso!</h1>
+                <h1 class="text-dark fw-bold mb-2">¡Pago Exitoso!</h1>
                 <p class="text-secondary mb-4">Tu transacción ha sido procesada correctamente y el inventario ha sido
                     actualizado en nuestro sistema.</p>
 
-                <div class="card bg-dark border-secondary text-start p-3 mb-4">
+                <div class="card bg-white border-secondary text-start p-3 mb-4">
                     <h5 class="text-info border-bottom border-secondary pb-2 mb-3"><i class="bi bi-receipt"></i> Detalle
                         del Comprobante</h5>
                     <div class="d-flex justify-content-between text-secondary mb-1">
                         <span>N° de Operación:</span>
-                        <span class="text-light fw-bold" th:text="'#HG-' + ${venta.id}">#HG-1</span>
+                        <span class="text-dark fw-bold" th:text="'#HG-' + ${venta.id}">#HG-1</span>
                     </div>
                     <div class="d-flex justify-content-between text-secondary mb-1">
                         <span>Fecha:</span>
-                        <span class="text-light" th:text="${#temporals.format(venta.fecha, 'dd/MM/yyyy HH:mm')}">fecha</span>
+                        <span class="text-dark" th:text="${#temporals.format(venta.fecha, 'dd/MM/yyyy HH:mm')}">fecha</span>
                     </div>
                     <div class="d-flex justify-content-between text-secondary mb-1">
                         <span>Método de Pago:</span>
-                        <span class="text-light">Tarjeta de Crédito / Débito</span>
+                        <span class="text-dark">Tarjeta de Crédito / Débito</span>
                     </div>
                     <div class="d-flex justify-content-between text-secondary mb-1">
                         <span>Cliente:</span>
-                        <span class="text-light" th:text="${venta.nombreComprador}">Cliente</span>
+                        <span class="text-dark" th:text="${venta.nombreComprador}">Cliente</span>
                     </div>
                     <div class="d-flex justify-content-between text-secondary mb-1">
                         <span>Dirección:</span>
-                        <span class="text-light" th:text="${venta.direccion}">Dirección</span>
+                        <span class="text-dark" th:text="${venta.direccion}">Dirección</span>
                     </div>
                     <div class="d-flex justify-content-between text-secondary mb-1">
                         <span>Artículos:</span>
-                        <span class="text-light" th:text="${venta.detalles.size()}">0</span>
+                        <span class="text-dark" th:text="${venta.detalles.size()}">0</span>
                     </div>
                     <hr class="border-secondary">
-                    <div class="d-flex justify-content-between text-light fw-bold fs-5">
+                    <div class="d-flex justify-content-between text-dark fw-bold fs-5">
                         <span>Monto Total Cancelado:</span>
                         <span class="text-info" th:text="'S/ ' + ${#numbers.formatDecimal(venta.total, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
                     </div>
@@ -63,7 +63,7 @@
 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-center">
                     <a th:href="@{/index}" class="btn btn-primary px-4 py-2">Volver al Inicio</a>
-                    <a th:href="@{/catalogo}" class="btn btn-outline-light px-4 py-2">Seguir Comprando</a>
+                    <a th:href="@{/catalogo}" class="btn btn-outline-dark px-4 py-2">Seguir Comprando</a>
                 </div>
 
             </div>
