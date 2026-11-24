@@ -1,8 +1,8 @@
 -- USUARIOS
 INSERT INTO usuario (nombre, email, password, telefono, rol, activo) VALUES
-    ('Administrador', 'admin@herogames.com', 'admin123', '999888777', 'ADMIN', TRUE),   -- 1
-    ('Juan Pérez', 'juan@email.com', '123456', '987654321', 'CLIENTE', TRUE),          -- 2
-    ('Jose Pérez', 'jose@email.com', '123456', '987654322', 'CLIENTE', TRUE);          -- 3
+    ('Usuario Base 1', 'base1@email.com', '$2a$10$nnaB9tnQf/s1eCqYZOl18OdSa.BZUPricWvl/7t.b3zmOrP5GycJa', '999888777', 'CLIENTE', TRUE),   -- 1
+    ('Juan Pérez', 'juan@email.com', '$2a$10$xKv33PWRJccxJZaGnWtNZ.IVUeqMCRElwAJXZOas7vjxWq5K9i3b2', '987654321', 'CLIENTE', TRUE),          -- 2
+    ('Jose Pérez', 'jose@email.com', '$2a$10$xKv33PWRJccxJZaGnWtNZ.IVUeqMCRElwAJXZOas7vjxWq5K9i3b2', '987654322', 'CLIENTE', TRUE);          -- 3
 
 -- CATEGORÍAS (3 nuevas: 4, 5 y 6)
 INSERT INTO categoria (nombre, activo) VALUES
@@ -30,43 +30,43 @@ INSERT INTO producto (nombre, descripcion, precio, stock, imagen_url, oferta, ac
     ('Teclado Mecánico RGB', 'Teclado mecánico con switches rojos e iluminación RGB', 280.00, 18, 'https://images.unsplash.com/photo-1600080972464-8e5f35f63d08', 10, TRUE, 4),  -- 13
     ('Mouse Gamer 16000 DPI', 'Mouse ergonómico con 7 botones programables', 150.00, 25, 'https://images.unsplash.com/photo-1600080972464-8e5f35f63d08', 0, TRUE, 4),      -- 14
     ('Monitor Gamer 27" 165Hz', 'Monitor QHD con tasa de refresco de 165Hz', 1200.00, 5, 'https://images.unsplash.com/photo-1600080972464-8e5f35f63d08', 15, TRUE, 4),   -- 15
-                                                                                                        ('Tarjeta PSN S/ 100', 'Recarga de saldo para PlayStation Store', 100.00, 50, 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db', 0, TRUE, 5),         -- 16
-                                                                                                        ('Xbox Game Pass 3 meses', 'Suscripción de 3 meses a Game Pass Ultimate', 150.00, 30, 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db', 0, TRUE, 5),  -- 17
+    ('Tarjeta PSN S/ 100', 'Recarga de saldo para PlayStation Store', 100.00, 50, 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db', 0, TRUE, 5),         -- 16
+    ('Xbox Game Pass 3 meses', 'Suscripción de 3 meses a Game Pass Ultimate', 150.00, 30, 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db', 0, TRUE, 5),  -- 17
     ('Funko Pop Kratos', 'Figura coleccionable de Kratos', 90.00, 0, 'https://images.unsplash.com/photo-1542751371-adc38448a05e', 0, TRUE, 6),                      -- 18 (agotado, para probar)
     ('Figura Master Chief', 'Figura articulada de 30 cm', 350.00, 7, 'https://images.unsplash.com/photo-1542751371-adc38448a05e', 25, TRUE, 6);                      -- 19
 
 -- VENTAS (ids 1 a 7, en este orden). total = suma de sus detalles
 INSERT INTO venta (fecha, usuario, nombre_comprador, direccion, total, estado) VALUES
-                                                                                   (DATEADD('MONTH', -5, CURRENT_TIMESTAMP()), 2, 'Juan Pérez', 'Av. Siempre Viva 123', 2755.00, 'PAGADO'),   -- 1
-                                                                                   (DATEADD('MONTH', -4, CURRENT_TIMESTAMP()), 2, 'Juan Pérez', 'Av. Siempre Viva 123', 330.00, 'PAGADO'),    -- 2
-                                                                                   (DATEADD('MONTH', -3, CURRENT_TIMESTAMP()), 3, 'Jose Pérez', 'Jr. Los Olivos 456', 1580.00, 'PAGADO'),    -- 3
-                                                                                   (DATEADD('MONTH', -2, CURRENT_TIMESTAMP()), 3, 'Jose Pérez', 'Jr. Los Olivos 456', 807.00, 'PAGADO'),     -- 4
-                                                                                   (DATEADD('MONTH', -1, CURRENT_TIMESTAMP()), 2, 'Juan Pérez', 'Av. Siempre Viva 123', 513.00, 'PAGADO'),   -- 5
-                                                                                   (CURRENT_TIMESTAMP(), 3, 'Jose Pérez', 'Jr. Los Olivos 456', 772.50, 'PAGADO'),                           -- 6
-                                                                                   (CURRENT_TIMESTAMP(), 2, 'Juan Pérez', 'Av. Siempre Viva 123', 1320.00, 'PAGADO');                        -- 7
+    (DATEADD('MONTH', -5, CURRENT_TIMESTAMP()), 2, 'Juan Pérez', 'Av. Siempre Viva 123', 2755.00, 'PAGADO'),   -- 1
+    (DATEADD('MONTH', -4, CURRENT_TIMESTAMP()), 2, 'Juan Pérez', 'Av. Siempre Viva 123', 330.00, 'PAGADO'),    -- 2
+    (DATEADD('MONTH', -3, CURRENT_TIMESTAMP()), 3, 'Jose Pérez', 'Jr. Los Olivos 456', 1580.00, 'PAGADO'),    -- 3
+    (DATEADD('MONTH', -2, CURRENT_TIMESTAMP()), 3, 'Jose Pérez', 'Jr. Los Olivos 456', 807.00, 'PAGADO'),     -- 4
+    (DATEADD('MONTH', -1, CURRENT_TIMESTAMP()), 2, 'Juan Pérez', 'Av. Siempre Viva 123', 513.00, 'PAGADO'),   -- 5
+    (CURRENT_TIMESTAMP(), 3, 'Jose Pérez', 'Jr. Los Olivos 456', 772.50, 'PAGADO'),                           -- 6
+    (CURRENT_TIMESTAMP(), 2, 'Juan Pérez', 'Av. Siempre Viva 123', 1320.00, 'PAGADO');                        -- 7
 
 -- DETALLES (id_venta apunta a la venta; precio_unitario = precio final con oferta)
 INSERT INTO detalle_venta (id_producto, cantidad, precio_unitario, id_venta) VALUES
-                                                                                 -- Venta 1: 2500 + 255 = 2755
-                                                                                 (2, 1, 2500.00, 1),
-                                                                                 (3, 1, 255.00, 1),
-                                                                                 -- Venta 2: 2x135 + 60 = 330
-                                                                                 (1, 2, 135.00, 2),
-                                                                                 (12, 1, 60.00, 2),
-                                                                                 -- Venta 3: 1330 + 250 = 1580
-                                                                                 (8, 1, 1330.00, 3),
-                                                                                 (4, 1, 250.00, 3),
-                                                                                 -- Venta 4: 252 + 150 + 405 = 807
-                                                                                 (13, 1, 252.00, 4),
-                                                                                 (14, 1, 150.00, 4),
-                                                                                 (11, 1, 405.00, 4),
-                                                                                 -- Venta 5: 153 + 160 + 2x100 = 513
-                                                                                 (7, 1, 153.00, 5),
-                                                                                 (5, 1, 160.00, 5),
-                                                                                 (16, 2, 100.00, 5),
-                                                                                 -- Venta 6: 2x255 + 262.50 = 772.50
-                                                                                 (3, 2, 255.00, 6),
-                                                                                 (19, 1, 262.50, 6),
-                                                                                 -- Venta 7: 1020 + 2x150 = 1320
-                                                                                 (15, 1, 1020.00, 7),
-                                                                                 (14, 2, 150.00, 7);
+    -- Venta 1: 2500 + 255 = 2755
+    (2, 1, 2500.00, 1),
+    (3, 1, 255.00, 1),
+    -- Venta 2: 2x135 + 60 = 330
+    (1, 2, 135.00, 2),
+    (12, 1, 60.00, 2),
+    -- Venta 3: 1330 + 250 = 1580
+    (8, 1, 1330.00, 3),
+    (4, 1, 250.00, 3),
+    -- Venta 4: 252 + 150 + 405 = 807
+    (13, 1, 252.00, 4),
+    (14, 1, 150.00, 4),
+    (11, 1, 405.00, 4),
+    -- Venta 5: 153 + 160 + 2x100 = 513
+    (7, 1, 153.00, 5),
+    (5, 1, 160.00, 5),
+    (16, 2, 100.00, 5),
+    -- Venta 6: 2x255 + 262.50 = 772.50
+    (3, 2, 255.00, 6),
+    (19, 1, 262.50, 6),
+    -- Venta 7: 1020 + 2x150 = 1320
+    (15, 1, 1020.00, 7),
+    (14, 2, 150.00, 7);                      -- 7

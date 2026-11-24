@@ -4,6 +4,8 @@ import com.example.demo.adapter.UsuarioAdapter;
 import com.example.demo.entity.UsuarioEntity;
 import com.example.demo.model.Usuario;
 import com.example.demo.repository.UsuarioRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,10 +16,14 @@ import java.util.stream.Collectors;
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioAdapter usuarioAdapter;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, UsuarioAdapter usuarioAdapter) {
+    public UsuarioService(UsuarioRepository usuarioRepository,
+                          UsuarioAdapter usuarioAdapter,
+                          PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.usuarioAdapter = usuarioAdapter;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -69,12 +75,21 @@ public class UsuarioService {
         Usuario nuevo = new Usuario();
         nuevo.setNombre(nombre);
         nuevo.setEmail(email);
-        nuevo.setPassword(password);
+        nuevo.setPassword(passwordEncoder.encode(password));
         nuevo.setTelefono(telefono);
         nuevo.setActivo(activo);
 
         usuarioRepository.save(usuarioAdapter.toEntity(nuevo));
         return null;
+
+
+    }
+
+    public Usuario buscarPorEmail(String email) {
+        return usuarioRepository.findByEmail(email).stream()
+                .findFirst()
+                .map(usuarioAdapter::toModel)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + email));
     }
 
     public String registrar(String nombre, String email, String password, String confirm) {

@@ -1,20 +1,18 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.DetalleVenta;
 import com.example.demo.model.Usuario;
 import com.example.demo.model.Venta;
 import com.example.demo.service.CarritoService;
 import com.example.demo.service.ProductoService;
+import com.example.demo.service.UsuarioService;
 import com.example.demo.service.VentaService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @Controller
 public class CarritoController {
@@ -22,24 +20,28 @@ public class CarritoController {
     private final CarritoService carritoService;
     private final ProductoService productoService;
     private final VentaService ventaService;
+    private final UsuarioService usuarioService;
 
-    public CarritoController(CarritoService carritoService, ProductoService productoService, VentaService ventaService) {
+    public CarritoController(CarritoService carritoService,
+                             ProductoService productoService,
+                             VentaService ventaService,
+                             UsuarioService usuarioService) {
         this.carritoService = carritoService;
         this.productoService = productoService;
         this.ventaService = ventaService;
+        this.usuarioService = usuarioService;
     }
 
     @GetMapping("carrito")
-    public String carrito(Model model){
-        model.addAttribute("items",carritoService.listar());
+    public String carrito(Model model) {
+        model.addAttribute("items", carritoService.listar());
         model.addAttribute("total", carritoService.total());
         model.addAttribute("recomendados", productoService.listarProductos());
-
         return "tienda/carrito";
     }
 
     @PostMapping("carrito/agregar")
-    public String agregar(@RequestParam Long id, HttpServletRequest request){
+    public String agregar(@RequestParam Long id, HttpServletRequest request) {
         carritoService.agregarCarrito(id);
         return "redirect:" + destino(request);
     }
@@ -65,10 +67,7 @@ public class CarritoController {
     }
 
     @GetMapping("/checkout")
-    public String checkout(HttpSession session, Model model) {
-        if (session.getAttribute("usuario") == null) {
-            return "redirect:/login";
-        }
+    public String checkout(Model model) {
         if (carritoService.listar().isEmpty()) {
             return "redirect:/carrito";
         }
@@ -99,14 +98,11 @@ public class CarritoController {
     @PostMapping("/checkout/confirmar")
     public String confirmar(@RequestParam String nombre,
                             @RequestParam String direccion,
-                            HttpSession session) {
-        Object obj = session.getAttribute("usuario");
-        if (!(obj instanceof Usuario usuario)) {
-            return "redirect:/login";
-        }
+                            Authentication auth) {
         if (carritoService.listar().isEmpty()) {
             return "redirect:/carrito";
         }
+        Usuario usuario = usuarioService.buscarPorEmail(auth.getName());
         Venta venta = ventaService.crearVenta(usuario, carritoService.listar(), nombre, direccion);
         carritoService.vaciar();
         return "redirect:/pago-resultado?id=" + venta.getId();

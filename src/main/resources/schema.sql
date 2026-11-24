@@ -16,7 +16,7 @@ CREATE TABLE usuario (
     activo BOOLEAN DEFAULT TRUE
 );
 
--- 2. Tabla Categoria
+-- 2. Tabla Categoria (antes de producto y task por las claves foráneas)
 CREATE TABLE categoria (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
@@ -25,17 +25,17 @@ CREATE TABLE categoria (
 
 -- 3. Tabla Producto
 CREATE TABLE producto (
-                          id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                          nombre VARCHAR(255) NOT NULL,
-                          descripcion TEXT,
-                          precio DOUBLE NOT NULL,
-                          stock INT NOT NULL,
-                          imagen_url VARCHAR(255),
-                          oferta INT DEFAULT 0,
-                          activo BOOLEAN DEFAULT TRUE,
-                          id_categoria BIGINT,
-                          CONSTRAINT chk_producto_stock CHECK (stock >= 0),
-                          CONSTRAINT fk_producto_categoria FOREIGN KEY (id_categoria) REFERENCES categoria(id)
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    descripcion TEXT,
+    precio DOUBLE NOT NULL,
+    stock INT NOT NULL,
+    imagen_url VARCHAR(255),
+    oferta INT DEFAULT 0,
+    activo BOOLEAN DEFAULT TRUE,
+    id_categoria BIGINT,
+    CONSTRAINT chk_producto_stock CHECK (stock >= 0),
+    CONSTRAINT fk_producto_categoria FOREIGN KEY (id_categoria) REFERENCES categoria(id)
 );
 
 -- 4. Tabla Task
@@ -49,22 +49,23 @@ CREATE TABLE task (
 
 -- 5. Tabla Venta
 CREATE TABLE venta (
-                       id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                       fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                       usuario BIGINT NOT NULL,
-                       nombre_comprador VARCHAR(255),
-                       direccion VARCHAR(255),
-                       total DOUBLE NOT NULL,
-                       estado VARCHAR(50) DEFAULT 'PAGADO',
-                       CONSTRAINT fk_venta_usuario FOREIGN KEY (usuario) REFERENCES usuario(id)
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    usuario BIGINT NOT NULL,
+    nombre_comprador VARCHAR(255),
+    direccion VARCHAR(255),
+    total DOUBLE NOT NULL,
+    estado VARCHAR(50) DEFAULT 'PAGADO',
+    CONSTRAINT fk_venta_usuario FOREIGN KEY (usuario) REFERENCES usuario(id)
 );
 
+-- 6. Tabla Detalle Venta
 CREATE TABLE detalle_venta (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     id_producto BIGINT NOT NULL,
-                               cantidad INT NOT NULL,
-                               precio_unitario DOUBLE NOT NULL,
-                               id_venta BIGINT NOT NULL,
-                               CONSTRAINT fk_detalle_producto FOREIGN KEY (id_producto) REFERENCES producto(id),
-                               CONSTRAINT fk_detalle_venta FOREIGN KEY (id_venta) REFERENCES venta(id)
+    cantidad INT NOT NULL,
+    precio_unitario DOUBLE NOT NULL,
+    id_venta BIGINT NOT NULL,
+    CONSTRAINT fk_detalle_producto FOREIGN KEY (id_producto) REFERENCES producto(id),
+    CONSTRAINT fk_detalle_venta FOREIGN KEY (id_venta) REFERENCES venta(id)
 );
