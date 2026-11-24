@@ -12,6 +12,7 @@ public class Venta {
     private Long idUsuario;
     private String nombreComprador;
     private String direccion;
+    private double envio;
     private List<DetalleVenta> detalles = new ArrayList<>();
     private double total;
     private String estado = "PAGADO";
@@ -40,6 +41,14 @@ public class Venta {
 
     public String getDireccion() { return direccion; }
     public void setDireccion(String direccion) { this.direccion = direccion; }
+
+    public double getEnvio() {
+        return envio;
+    }
+
+    public void setEnvio(double envio) {
+        this.envio = envio;
+    }
 
     public List<DetalleVenta> getDetalles() { return detalles; }
     public void setDetalles(List<DetalleVenta> detalles) { this.detalles = detalles; }

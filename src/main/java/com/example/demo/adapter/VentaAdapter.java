@@ -30,6 +30,7 @@ public class VentaAdapter {
         venta.setIdUsuario(entity.getUsuario().getId());
         venta.setNombreComprador(entity.getNombreComprador());
         venta.setDireccion(entity.getDireccion());
+        venta.setEnvio(entity.getEnvio());
         venta.setEstado(entity.getEstado());
         venta.setDetalles(
                 entity.getDetalles().stream()
@@ -51,6 +52,7 @@ public class VentaAdapter {
         entity.setFecha(model.getFecha());
         entity.setNombreComprador(model.getNombreComprador());
         entity.setDireccion(model.getDireccion());
+        entity.setEnvio(model.getEnvio());
         entity.setEstado(model.getEstado());
         entity.setTotal(model.getTotal());
 

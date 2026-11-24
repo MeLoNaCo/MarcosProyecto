@@ -49,7 +49,7 @@ public class VentaService {
     }
 
     @Transactional
-    public Venta crearVenta(Usuario usuario, List<DetalleVenta> items, String nombre, String direccion) {
+    public Venta crearVenta(Usuario usuario, List<DetalleVenta> items, String nombre, String direccion, double envio) {
         if (usuario == null || usuario.getId() == null) {
             throw new IllegalArgumentException("La venta requiere un usuario");
         }
@@ -57,7 +57,6 @@ public class VentaService {
             throw new IllegalStateException("El carrito está vacío");
         }
 
-        // 1. Validar y descontar stock (esto es lo nuevo)
         for (DetalleVenta d : items) {
             ProductoEntity p = productoRepository.findById(d.getProducto().getId())
                     .orElseThrow(() -> new IllegalStateException("Producto no encontrado"));
@@ -68,13 +67,13 @@ public class VentaService {
             p.setStock(p.getStock() - d.getCantidad());
         }
 
-        // 2. Armar y guardar la venta (lo que ya tenías)
         Venta venta = new Venta();
         venta.setFecha(LocalDateTime.now());
         venta.setIdUsuario(usuario.getId());
         venta.setNombreComprador(nombre != null && !nombre.isBlank() ? nombre : usuario.getNombre());
         venta.setDireccion(direccion);
         venta.setDetalles(items);
+        venta.setEnvio(envio);
 
         VentaEntity saved = ventaRepository.save(ventaAdapter.toEntity(venta));
         venta.setId(saved.getId());

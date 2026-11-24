@@ -23,6 +23,10 @@ public class CarritoService {
         this.productoAdapter = productoAdapter;
     }
 
+    public double calcularEnvio(double subtotal) {
+        return subtotal > 200.0 ? 0.0 : subtotal * 0.10;
+    }
+
     public void agregarCarrito(Long productoId){
         for (DetalleVenta d : items) {
             if (d.getProducto().getId().equals(productoId)) {

@@ -10,6 +10,6 @@ import java.util.List;
 public interface VentaRepository extends JpaRepository<VentaEntity, Long> {
     List<VentaEntity> findByUsuarioIdOrderByFechaDesc(Long idUsuario);
 
-    @Query("SELECT COALESCE(SUM(v.total), 0) FROM venta v")
+    @Query("SELECT COALESCE(SUM(v.total + v.envio), 0) FROM venta v")
     double sumarTotalVentas();
 }

@@ -7,72 +7,83 @@
     <title>Pago Resultado - Hero Games</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}" href="../css/estilos.css">
 </head>
 
 <body class="d-flex flex-column min-vh-100">
 
-    <header th:replace="~{fragments/navbar :: navbar}">
-    </header>
+<header th:replace="~{fragments/navbar :: navbar}">
+</header>
 
-    <main class="container my-auto flex-grow-1 d-flex align-items-center justify-content-center py-5">
-        <div class="col-md-7 col-lg-6">
-            <div class="card border-secondary shadow-lg text-center p-4 p-md-5">
+<main class="container my-auto flex-grow-1 d-flex align-items-center justify-content-center py-5">
+    <div class="col-md-7 col-lg-6">
+        <div class="card border-secondary shadow-lg text-center p-4 p-md-5">
 
-                <div class="mb-3">
-                    <i class="bi bi-check-circle-fill text-success display-1"></i>
-                </div>
-
-                <h1 class="text-dark fw-bold mb-2">¡Pago Exitoso!</h1>
-                <p class="text-secondary mb-4">Tu transacción ha sido procesada correctamente y el inventario ha sido
-                    actualizado en nuestro sistema.</p>
-
-                <div class="card bg-white border-secondary text-start p-3 mb-4">
-                    <h5 class="text-info border-bottom border-secondary pb-2 mb-3"><i class="bi bi-receipt"></i> Detalle
-                        del Comprobante</h5>
-                    <div class="d-flex justify-content-between text-secondary mb-1">
-                        <span>N° de Operación:</span>
-                        <span class="text-dark fw-bold" th:text="'#HG-' + ${venta.id}">#HG-1</span>
-                    </div>
-                    <div class="d-flex justify-content-between text-secondary mb-1">
-                        <span>Fecha:</span>
-                        <span class="text-dark" th:text="${#temporals.format(venta.fecha, 'dd/MM/yyyy HH:mm')}">fecha</span>
-                    </div>
-                    <div class="d-flex justify-content-between text-secondary mb-1">
-                        <span>Método de Pago:</span>
-                        <span class="text-dark">Tarjeta de Crédito / Débito</span>
-                    </div>
-                    <div class="d-flex justify-content-between text-secondary mb-1">
-                        <span>Cliente:</span>
-                        <span class="text-dark" th:text="${venta.nombreComprador}">Cliente</span>
-                    </div>
-                    <div class="d-flex justify-content-between text-secondary mb-1">
-                        <span>Dirección:</span>
-                        <span class="text-dark" th:text="${venta.direccion}">Dirección</span>
-                    </div>
-                    <div class="d-flex justify-content-between text-secondary mb-1">
-                        <span>Artículos:</span>
-                        <span class="text-dark" th:text="${venta.detalles.size()}">0</span>
-                    </div>
-                    <hr class="border-secondary">
-                    <div class="d-flex justify-content-between text-dark fw-bold fs-5">
-                        <span>Monto Total Cancelado:</span>
-                        <span class="text-info" th:text="'S/ ' + ${#numbers.formatDecimal(venta.total, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
-                    </div>
-                </div>
-
-                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                    <a th:href="@{/index}" class="btn btn-primary px-4 py-2">Volver al Inicio</a>
-                    <a th:href="@{/catalogo}" class="btn btn-outline-dark px-4 py-2">Seguir Comprando</a>
-                </div>
-
+            <div class="mb-3">
+                <i class="bi bi-check-circle-fill text-success display-1"></i>
             </div>
+
+            <h1 class="text-dark fw-bold mb-2">¡Pago Exitoso!</h1>
+            <p class="text-secondary mb-4">Tu transacción ha sido procesada correctamente y el inventario ha sido
+                actualizado en nuestro sistema.</p>
+
+            <div class="card bg-white border-secondary text-start p-3 mb-4">
+                <h5 class="text-info border-bottom border-secondary pb-2 mb-3"><i class="bi bi-receipt"></i> Detalle
+                    del Comprobante</h5>
+                <div class="d-flex justify-content-between text-secondary mb-1">
+                    <span>N° de Operación:</span>
+                    <span class="text-dark fw-bold" th:text="'#HG-' + ${venta.id}">#HG-1</span>
+                </div>
+                <div class="d-flex justify-content-between text-secondary mb-1">
+                    <span>Fecha:</span>
+                    <span class="text-dark" th:text="${#temporals.format(venta.fecha, 'dd/MM/yyyy HH:mm')}">fecha</span>
+                </div>
+                <div class="d-flex justify-content-between text-secondary mb-1">
+                    <span>Método de Pago:</span>
+                    <span class="text-dark">Tarjeta de Crédito / Débito</span>
+                </div>
+                <div class="d-flex justify-content-between text-secondary mb-1">
+                    <span>Cliente:</span>
+                    <span class="text-dark" th:text="${venta.nombreComprador}">Cliente</span>
+                </div>
+                <div class="d-flex justify-content-between text-secondary mb-1">
+                    <span>Dirección:</span>
+                    <span class="text-dark" th:text="${venta.direccion}">Dirección</span>
+                </div>
+                <div class="d-flex justify-content-between text-secondary mb-1">
+                    <span>Artículos:</span>
+                    <span class="text-dark" th:text="${venta.detalles.size()}">0</span>
+                </div>
+                <hr class="border-secondary">
+                <div class="d-flex justify-content-between text-secondary mb-1">
+                    <span>Subtotal:</span>
+                    <span class="text-dark" th:text="'S/ ' + ${#numbers.formatDecimal(venta.total, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
+                </div>
+                <div class="d-flex justify-content-between text-secondary mb-2">
+                    <span>Delivery:</span>
+                    <span th:if="${venta.envio == 0}" class="text-success fw-bold">Gratis</span>
+                    <span th:unless="${venta.envio == 0}" class="text-dark"
+                          th:text="'S/ ' + ${#numbers.formatDecimal(venta.envio, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
+                </div>
+                <div class="d-flex justify-content-between text-dark fw-bold fs-5">
+                    <span>Monto Total Cancelado:</span>
+                    <span class="text-info" th:text="'S/ ' + ${#numbers.formatDecimal(venta.total + venta.envio, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                <a th:href="@{/}" class="btn btn-primary px-4 py-2">Volver al Inicio</a>
+                <a th:href="@{/catalogo}" class="btn btn-outline-dark px-4 py-2">Seguir Comprando</a>
+            </div>
+
         </div>
-    </main>
+    </div>
+</main>
 
+<footer th:replace="~{fragments/footer :: footer}">
+</footer>
 
-    <footer th:replace="~{fragments/footer :: footer}">
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
+</html>

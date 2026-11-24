@@ -67,17 +67,19 @@ public class CarritoController {
     }
 
     @GetMapping("/checkout")
-    public String checkout(Model model) {
+    public String checkout(Authentication auth, Model model) {
         if (carritoService.listar().isEmpty()) {
             return "redirect:/carrito";
         }
+        model.addAttribute("usuario", usuarioService.buscarPorEmail(auth.getName()));
+
         double subtotal = carritoService.total();
         double igv = subtotal * 0.18;
-        double envio = (subtotal > 200.0) ? 0.0 : (subtotal * 0.10);
+        double envio = carritoService.calcularEnvio(subtotal);
         double totalPagar = subtotal + igv + envio;
 
         model.addAttribute("items", carritoService.listar());
-        model.addAttribute("total", subtotal);
+        model.addAttribute("subtotal", subtotal);
         model.addAttribute("igv", igv);
         model.addAttribute("envio", envio);
         model.addAttribute("totalPagar", totalPagar);
@@ -103,7 +105,8 @@ public class CarritoController {
             return "redirect:/carrito";
         }
         Usuario usuario = usuarioService.buscarPorEmail(auth.getName());
-        Venta venta = ventaService.crearVenta(usuario, carritoService.listar(), nombre, direccion);
+        double envio = carritoService.calcularEnvio(carritoService.total());
+        Venta venta = ventaService.crearVenta(usuario, carritoService.listar(), nombre, direccion, envio);
         carritoService.vaciar();
         return "redirect:/pago-resultado?id=" + venta.getId();
     }

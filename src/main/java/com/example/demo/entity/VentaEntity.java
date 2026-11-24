@@ -21,6 +21,9 @@ public class VentaEntity {
     @JoinColumn(name = "usuario", nullable = false)
     private UsuarioEntity usuario;
 
+    @Column(columnDefinition = "DOUBLE DEFAULT 0")
+    private double envio;
+
     private String nombreComprador;
     private String direccion;
 
@@ -66,6 +69,14 @@ public class VentaEntity {
 
     public void setUsuario(UsuarioEntity usuario) {
         this.usuario = usuario;
+    }
+
+    public double getEnvio() {
+        return envio;
+    }
+
+    public void setEnvio(double envio) {
+        this.envio = envio;
     }
 
     public String getNombreComprador() {
