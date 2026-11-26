@@ -71,16 +71,13 @@ public class CarritoController {
         if (carritoService.listar().isEmpty()) {
             return "redirect:/carrito";
         }
-        model.addAttribute("usuario", usuarioService.buscarPorEmail(auth.getName()));
-
         double subtotal = carritoService.total();
-        double igv = subtotal * 0.18;
         double envio = carritoService.calcularEnvio(subtotal);
-        double totalPagar = subtotal + igv + envio;
+        double totalPagar = subtotal + envio;
 
+        model.addAttribute("usuario", usuarioService.buscarPorEmail(auth.getName()));
         model.addAttribute("items", carritoService.listar());
         model.addAttribute("subtotal", subtotal);
-        model.addAttribute("igv", igv);
         model.addAttribute("envio", envio);
         model.addAttribute("totalPagar", totalPagar);
 
